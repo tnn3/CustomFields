@@ -1,0 +1,35 @@
+﻿@using Domain.Enums
+@model Domain.CustomField
+
+<div class="form-group">
+    <label asp-for="FieldName" class="control-label"></label>
+    <input asp-for="FieldName" class="form-control" />
+    <span asp-validation-for="FieldName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="FieldType" class="control-label"></label>
+    <select asp-for="FieldType" asp-items="Html.GetEnumSelectList<FieldType>()" class="form-control"></select>
+    <span asp-validation-for="FieldType" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="PossibleValues" class="control-label"></label>
+    <input asp-for="PossibleValues" class="form-control" />
+    <span asp-validation-for="PossibleValues" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="MinLength" class="control-label"></label>
+    <input asp-for="MinLength" class="form-control" />
+    <span asp-validation-for="MinLength" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="MaxLength" class="control-label"></label>
+    <input asp-for="MaxLength" class="form-control" />
+    <span asp-validation-for="MaxLength" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
+        </label>
+    </div>
+</div>
