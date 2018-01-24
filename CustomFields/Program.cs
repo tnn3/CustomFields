@@ -30,6 +30,7 @@ namespace WebApplication
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "Seeding the database failed.");
+                    throw;
                 }
             }
 

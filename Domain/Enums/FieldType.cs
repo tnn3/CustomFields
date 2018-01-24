@@ -7,6 +7,9 @@ namespace Domain.Enums
     public enum FieldType
     {
         Text,
+        Radio,
+        Checkbox,
+        Select
         /*Date,
         Datetime,
         Email,
@@ -14,8 +17,6 @@ namespace Domain.Enums
         Range,
         Time,
         Url,
-        Month,
-        Radio,
-        Checkbox*/
+        Month,*/
     }
 }

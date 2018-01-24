@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Domain;
+using Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace DAL.Extensions
@@ -14,6 +15,63 @@ namespace DAL.Extensions
             if (!context.Users.Any())
             {
                 await SeedUsers(roleManager, userManager);
+            }
+
+            if (!context.CustomFields.Any())
+            {
+                context.CustomFields.Add(new CustomField
+                {
+                    FieldType = FieldType.Text,
+                    FieldName = "Test Text Field",
+                    IsRequired = true,
+                    MinLength = 0,
+                    MaxLength = 10
+                });
+                context.CustomFields.Add(new CustomField
+                {
+                    FieldType = FieldType.Checkbox,
+                    FieldName = "Test Checkbox",
+                    PossibleValues = "Checkbox Value1, Checkbox Value2, Checkbox Value3"
+                });
+                context.CustomFields.Add(new CustomField
+                {
+                    FieldType = FieldType.Radio,
+                    FieldName = "Test Radio",
+                    PossibleValues = "Radio Value4, Radio Value5, Radio Value6"
+                });
+                context.CustomFields.Add(new CustomField
+                {
+                    FieldType = FieldType.Select,
+                    FieldName = "Test Select",
+                    PossibleValues = "Select Value7, Select Value8, Select Value9"
+                });
+                context.SaveChanges();
+            }
+
+            if (!context.ProjectTasks.Any())
+            {
+                context.ProjectTasks.Add(new ProjectTask());
+                context.SaveChanges();
+            }
+
+            if (!context.CustomFieldInTasks.Any())
+            {
+                context.CustomFieldInTasks.Add(new CustomFieldInTasks {
+                    FieldValue = "Test text field value", CustomFieldId = 1, ProjectTaskId = 1
+                });
+                context.CustomFieldInTasks.Add(new CustomFieldInTasks
+                {
+                    FieldValue = "Test text field value", CustomFieldId = 2, ProjectTaskId = 1
+                });
+                context.CustomFieldInTasks.Add(new CustomFieldInTasks
+                {
+                    FieldValue = "Test text field value", CustomFieldId = 3, ProjectTaskId = 1
+                });
+                context.CustomFieldInTasks.Add(new CustomFieldInTasks
+                {
+                    FieldValue = "Test text field value", CustomFieldId = 4, ProjectTaskId = 1
+                });
+                context.SaveChanges();
             }
         }
 
