@@ -50,7 +50,7 @@ namespace DAL.Extensions
 
             if (!context.ProjectTasks.Any())
             {
-                context.ProjectTasks.Add(new ProjectTask());
+                context.ProjectTasks.Add(new ProjectTask{Title = "Test Task Title"});
                 context.SaveChanges();
             }
 

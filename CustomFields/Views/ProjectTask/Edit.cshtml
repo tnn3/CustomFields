@@ -1,4 +1,5 @@
-﻿@model Domain.ProjectTask
+﻿@using Domain.Enums
+@model Domain.ProjectTask
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,9 +14,68 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            @for (var i = 0; i < Model.CustomFields.Count; i++)
+            {
+                <div class="form-group">
+                    <label for="ProjectTask.CustomFieldValue[@i].FieldValue" class="control-label">@Model.CustomFields[i].CustomField.FieldName</label>
+                        <input type="hidden" id="ProjectTask.CustomFieldValue[@i].CustomFieldId" name="ProjectTask.CustomFieldValue[@i].CustomFieldId" value="@Model.CustomFields[i].CustomFieldId" />
+                        @switch (Model.CustomFields[i].CustomField.FieldType)
+                        {
+                            case FieldType.Text:
+                                <input type="text" class="form-control"
+                                       id="ProjectTask.CustomFieldValue[@i].FieldValue"
+                                       name="ProjectTask.CustomFieldValue[@i].FieldValue"
+                                       required="@Model.CustomFields[i].CustomField.IsRequired"
+                                       maxlength="@Model.CustomFields[i].CustomField.MaxLength"
+                                       @if (Model.CustomFields[i].FieldValue != null)
+                                       {
+                                           @:value="@Model.CustomFields[i].FieldValue"
+                                       }/>
 
-            @Html.Partial("_CreateEdit", Model)
+                                break;
+                            case FieldType.Checkbox:
+                                foreach (var checkbox in Model.CustomFields[i].CustomField.PossibleValues.Split(","))
+                                {
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="" id="ProjectTask.CustomFieldValue[@i].FieldValue"
+                                                   name="ProjectTask.CustomFieldValue[@i].FieldValue" value="@Model.CustomFields[i].FieldValue"/>
 
+                                            @checkbox
+                                        </label>
+                                    </div>
+                                }
+                                break;
+                            case FieldType.Radio:
+                                foreach (var radio in Model.CustomFields[i].CustomField.PossibleValues.Split(","))
+                                {
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" class="" id="ProjectTask.CustomFieldValue[@i].FieldValue"
+                                                   name="ProjectTask.CustomFieldValue[@i].FieldValue" value="@Model.CustomFields[i].FieldValue"/>
+                                            @radio
+                                        </label>
+                                    </div>
+                                     
+                                 }
+                                break;
+                            case FieldType.Select:
+                                <select class="form-control">
+                                    @foreach (var option in Model.CustomFields[i].CustomField.PossibleValues.Split(","))
+                                    {
+                                        <option>@option</option>
+                                    }
+                                </select>
+                                break;
+                        }
+                </div>
+            }
+                
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
