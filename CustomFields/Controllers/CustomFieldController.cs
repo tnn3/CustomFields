@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Domain;
+using Interfaces.Repositories;
 
 namespace WebApplication.Controllers
 {
@@ -17,79 +15,116 @@ namespace WebApplication.Controllers
             _customFieldRepository = customFieldRepository;
         }
 
-        // GET: CustomField
-        public async Task<ActionResult> Index()
+        // GET: CustomFields
+        public async Task<IActionResult> Index()
         {
             return View(await _customFieldRepository.AllAsync());
         }
 
-        // GET: CustomField/Create
-        public ActionResult Create()
+        // GET: CustomFields/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customField = await _customFieldRepository.FindWithReferencesAsync(id.Value);
+            if (customField == null)
+            {
+                return NotFound();
+            }
+
+            return View(customField);
         }
 
-        // POST: CustomField/Create
+        // GET: CustomFields/Create
+        public IActionResult Create()
+        {
+            return View(new CustomField());
+        }
+
+        // POST: CustomFields/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CustomField customField)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            if (!ModelState.IsValid) return View(customField);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _customFieldRepository.Add(customField);
+            await _customFieldRepository.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: CustomField/Edit/5
-        public ActionResult Edit(int id)
+        // GET: CustomFields/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customField = await _customFieldRepository.FindWithReferencesAsync(id.Value);
+            if (customField == null)
+            {
+                return NotFound();
+            }
+            return View(customField);
         }
 
-        // POST: CustomField/Edit/5
+        // POST: CustomFields/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, CustomField customField)
         {
+            if (id != customField.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid) return View(customField);
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                _customFieldRepository.Update(customField);
+                await _customFieldRepository.SaveChangesAsync();
             }
-            catch
+            catch (DbUpdateConcurrencyException)
             {
-                return View();
+                if (!_customFieldRepository.Exists(customField.Id))
+                {
+                    return NotFound();
+                }
+                throw;
             }
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: CustomField/Delete/5
-        public ActionResult Delete(int id)
+        // GET: CustomFields/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customField = await _customFieldRepository.FindAsync(id.Value);
+            if (customField == null)
+            {
+                return NotFound();
+            }
+
+            return View(customField);
         }
 
-        // POST: CustomField/Delete/5
-        [HttpPost]
+        // POST: CustomFields/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var customField = await _customFieldRepository.FindAsync(id);
+            _customFieldRepository.Remove(customField);
+            await _customFieldRepository.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

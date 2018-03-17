@@ -74,7 +74,7 @@ namespace DAL.Repositories
 
         protected void CheckDisposed()
         {
-            if (_isDisposed) throw new ObjectDisposedException("The UnitOfWork is already disposed and cannot be used anymore.");
+            if (_isDisposed) throw new ObjectDisposedException("Already disposed and cannot be used anymore.");
         }
 
         protected virtual void Dispose(bool disposing)

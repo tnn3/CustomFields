@@ -18,6 +18,7 @@ namespace Domain
         public int MinLength { get; set; }
         public int MaxLength { get; set; }
         public bool IsRequired { get; set; }
+        public string RegexPattern { get; set; }
 
         public virtual List<CustomFieldInTasks> Tasks { get; set; }
     }

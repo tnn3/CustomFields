@@ -12,24 +12,27 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FieldName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FieldType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PossibleValues)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MinLength)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaxLength)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsRequired)
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FieldName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FieldType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PossibleValues)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MinLength)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxLength)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsRequired)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RegexPattern)
+                </th>
             <th></th>
         </tr>
     </thead>
@@ -55,8 +58,10 @@
                 @Html.DisplayFor(modelItem => item.IsRequired)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.RegexPattern)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
             </td>
         </tr>
 }
