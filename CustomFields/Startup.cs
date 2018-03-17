@@ -24,7 +24,7 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("PSQLConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
