@@ -1,19 +1,24 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DAL.Repositories;
 using Domain;
+using FormFactory;
 using Interfaces.Repositories;
+using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
     public class ProjectTaskController : Controller
     {
         private readonly IProjectTaskRepository _projectTaskRepository;
+        private readonly ICustomFieldRepository _customFieldRepository;
 
-        public ProjectTaskController(IProjectTaskRepository projectTaskRepository)
+        public ProjectTaskController(IProjectTaskRepository projectTaskRepository, ICustomFieldRepository customFieldRepository)
         {
             _projectTaskRepository = projectTaskRepository;
+            _customFieldRepository = customFieldRepository;
         }
 
         // GET: ProjectTask
@@ -40,9 +45,15 @@ namespace WebApplication.Controllers
         }
 
         // GET: ProjectTask/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var customFields = await _customFieldRepository.AllWithReferencesAsync();
+            var vm = new ProjectTaskViewModel
+            {
+                PropertyVms = MakeCustomFields(customFields)
+            };
+
+            return View(vm);
         }
 
         // POST: ProjectTask/Create
@@ -116,6 +127,15 @@ namespace WebApplication.Controllers
             }
 
             return View(projectTask);
+        }
+
+        public PropertyVm[] MakeCustomFields(List<CustomField> customFields)
+        {
+            return customFields.Select(customField => new PropertyVm(typeof(string), customField.FieldName)
+            {
+                DisplayName = customField.FieldName,
+                NotOptional = customField.IsRequired
+            }).ToArray();
         }
     }
 }

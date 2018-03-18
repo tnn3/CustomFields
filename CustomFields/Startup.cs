@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using System.Reflection;
+using DAL;
 using DAL.Repositories;
 using Domain;
 using Interfaces;
@@ -6,9 +7,11 @@ using Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace WebApplication
 {
@@ -43,6 +46,13 @@ namespace WebApplication
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
             services.AddMvc();
+
+            var embeddedFileProvider = new EmbeddedFileProvider(typeof(FormFactory.FF).GetTypeInfo().Assembly, nameof(FormFactory));
+            //Add the file provider to the Razor view engine
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.FileProviders.Add(embeddedFileProvider);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -59,6 +69,14 @@ namespace WebApplication
             }
 
             app.UseStaticFiles();
+
+            var options = new StaticFileOptions
+            {
+                RequestPath = "",
+                FileProvider = new EmbeddedFileProvider(typeof(FormFactory.FF).GetTypeInfo().Assembly, nameof(FormFactory))
+            };
+
+            app.UseStaticFiles(options);
 
             app.UseAuthentication();
 
