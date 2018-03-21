@@ -1,4 +1,5 @@
-﻿@using FormFactory.AspMvc
+﻿@using FormFactory
+@using FormFactory.AspMvc
 @model ProjectTaskViewModel
 
 @{
@@ -22,8 +23,19 @@
                 <input asp-for="ProjectTask.Title" class="form-control" />
                 <span asp-validation-for="ProjectTask.Title" class="text-danger"></span>
             </div>
+            
+            @{
+                var formModel = new[]
+                {
+                    new PropertyVm(typeof(DateTime) , "date")
+                    {
+                        DisplayName = "Your birthday",
+                        NotOptional =true,
+                    }
+                };
+            }
 
-            @Model.PropertyVms.Render(Html)
+            @formModel.Render(Html)
             
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
