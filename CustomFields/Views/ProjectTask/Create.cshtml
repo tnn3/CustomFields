@@ -1,5 +1,4 @@
-﻿@using FormFactory
-@using FormFactory.AspMvc
+﻿@using FormFactory.AspMvc
 @model ProjectTaskViewModel
 
 @{
@@ -23,9 +22,9 @@
                 <input asp-for="ProjectTask.Title" class="form-control" />
                 <span asp-validation-for="ProjectTask.Title" class="text-danger"></span>
             </div>
-            
+
             @Model.PropertyVms.Render(Html)
-            
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

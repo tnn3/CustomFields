@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain;
-using FormFactory;
 using Interfaces.Repositories;
+using WebApplication.Helpers;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
@@ -50,7 +48,7 @@ namespace WebApplication.Controllers
             var customFields = await _customFieldRepository.AllWithReferencesAsync();
             var vm = new ProjectTaskViewModel
             {
-                PropertyVms = MakeCustomFields(customFields)
+                PropertyVms = FormFieldHelper.MakeCustomFields(customFields)
             };
 
             return View(vm);
@@ -59,11 +57,11 @@ namespace WebApplication.Controllers
         // POST: ProjectTask/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProjectTask projectTask)
+        public async Task<IActionResult> Create(ProjectTaskViewModel vm)
         {
-            if (!ModelState.IsValid) return View(projectTask);
+            if (!ModelState.IsValid) return View(vm);
 
-            _projectTaskRepository.Add(projectTask);
+            _projectTaskRepository.Add(vm.ProjectTask);
             await _projectTaskRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -125,17 +123,10 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
+            _projectTaskRepository.Remove(projectTask);
+            await _projectTaskRepository.SaveChangesAsync();
 
-            return View(projectTask);
-        }
-
-        public PropertyVm[] MakeCustomFields(List<CustomField> customFields)
-        {
-            return customFields.Select(customField => new PropertyVm(typeof(string), customField.FieldName)
-            {
-                DisplayName = customField.FieldName,
-                NotOptional = customField.IsRequired
-            }).ToArray();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

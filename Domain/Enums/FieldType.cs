@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain.Enums
+﻿namespace Domain.Enums
 {
     public enum FieldType
     {
         Text,
         Radio,
         Checkbox,
-        Select
-        /*Date,
+        Select,
+        Date,
         Datetime,
-        Email,
+        Textarea
+        /*Email,
         Number,
         Range,
         Time,
         Url,
-        Month,*/
+        Month,
+        TextWithSuggestion*/
     }
 }
