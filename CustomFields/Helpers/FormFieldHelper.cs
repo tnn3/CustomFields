@@ -9,14 +9,13 @@ namespace WebApplication.Helpers
 {
     public class FormFieldHelper
     {
-        public static PropertyVm[] MakeCustomFields(List<CustomField> customFields)
+        public static PropertyVm[] MakeCustomFields<T>(List<CustomField> customFields)
         {
             var propertyvm = new List<PropertyVm>();
-            foreach (var customField in customFields)
-            {
-                var nameStart = nameof(ProjectTask) + "." + nameof(ProjectTask.CustomFields) + "[" + customField.Id + "].";
-                propertyvm.Add(new PropertyVm(typeof(string), nameStart + nameof(CustomFieldInTasks.CustomFieldId))
-                {
+            var idCounter = 0;
+            foreach (var customField in customFields) {
+                var nameStart = typeof(T).Name + "." + nameof(ProjectTask.CustomFields) + "[" + idCounter++ + "].";
+                propertyvm.Add(new PropertyVm(typeof(string), nameStart + nameof(CustomFieldInTasks.CustomFieldId)) {
                     IsHidden = true,
                     Value = customField.Id
                 });
@@ -26,7 +25,7 @@ namespace WebApplication.Helpers
                     DisplayName = customField.FieldName,
                     NotOptional = customField.IsRequired,
                     Name = nameStart + nameof(CustomFieldInTasks.FieldValue),
-                    //Id = nameof(ProjectTask) + "_" + nameof(ProjectTask.CustomFields) + "_" + customField.Id + "__" + nameof(CustomFieldInTasks.FieldValue)
+                    Id = typeof(T).Name + "_" + nameof(ProjectTask.CustomFields) + "_" + customField.Id + "__" + nameof(CustomFieldInTasks.FieldValue)
                 };
                 switch (customField.FieldType)
                 {

@@ -48,7 +48,7 @@ namespace WebApplication.Controllers
             var customFields = await _customFieldRepository.AllWithReferencesAsync();
             var vm = new ProjectTaskViewModel
             {
-                PropertyVms = FormFieldHelper.MakeCustomFields(customFields)
+                PropertyVms = FormFieldHelper.MakeCustomFields<ProjectTask>(customFields)
             };
 
             return View(vm);
@@ -57,8 +57,7 @@ namespace WebApplication.Controllers
         // POST: ProjectTask/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProjectTaskViewModel vm)
-        {
+        public async Task<IActionResult> Create(ProjectTaskViewModel vm){
             if (!ModelState.IsValid) return View(vm);
 
             _projectTaskRepository.Add(vm.ProjectTask);

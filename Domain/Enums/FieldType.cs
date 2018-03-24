@@ -1,4 +1,6 @@
-﻿namespace Domain.Enums
+﻿using System.ComponentModel;
+
+namespace Domain.Enums
 {
     public enum FieldType
     {
