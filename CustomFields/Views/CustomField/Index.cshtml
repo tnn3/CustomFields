@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Domain.CustomField>
+﻿@using Domain.Enums
+@model IEnumerable<Domain.CustomField>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,32 +8,28 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+    <a asp-action="" class="btn btn-default">Sort</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FieldName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FieldType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PossibleValues)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MinLength)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaxLength)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsRequired)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RegexPattern)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sort)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FieldName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FieldType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRequired)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disabled)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,29 +37,24 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Sort)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FieldName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FieldType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PossibleValues)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MinLength)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxLength)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IsRequired)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RegexPattern)
+                @Html.DisplayFor(modelItem => item.Disabled)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
 }

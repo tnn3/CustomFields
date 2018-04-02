@@ -8,7 +8,6 @@ namespace Domain
 
         [MaxLength(100)]
         public string FieldValue { get; set; }
-        public int Sort { get; set; }
 
         public int CustomFieldId { get; set; }
         public CustomField CustomField { get; set; }

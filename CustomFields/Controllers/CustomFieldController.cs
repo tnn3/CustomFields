@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain;
@@ -16,9 +17,9 @@ namespace WebApplication.Controllers
         }
 
         // GET: CustomFields
-        public async Task<IActionResult> Index()
-        {
-            return View(await _customFieldRepository.AllAsync());
+        public async Task<IActionResult> Index() {
+            var fields = await _customFieldRepository.AllAsync();
+            return View(fields.OrderBy(f => f.Sort));
         }
 
         // GET: CustomFields/Details/5

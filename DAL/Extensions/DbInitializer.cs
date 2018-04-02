@@ -25,25 +25,30 @@ namespace DAL.Extensions
                     FieldName = "Test Text Field",
                     IsRequired = true,
                     MinLength = 0,
-                    MaxLength = 10
+                    MaxLength = 10,
+                    Sort = 1,
+                    RegexPattern = "^[0-9A-Za-z ]+$"
                 });
                 context.CustomFields.Add(new CustomField
                 {
                     FieldType = FieldType.Checkbox,
                     FieldName = "Test Checkbox",
-                    PossibleValues = "Checkbox Value1, Checkbox Value2, Checkbox Value3"
+                    PossibleValues = "Checkbox Value1, Checkbox Value2, Checkbox Value3",
+                    Sort = 2,
                 });
                 context.CustomFields.Add(new CustomField
                 {
                     FieldType = FieldType.Radio,
                     FieldName = "Test Radio",
-                    PossibleValues = "Radio Value4, Radio Value5, Radio Value6"
+                    PossibleValues = "Radio Value4, Radio Value5, Radio Value6",
+                    Sort = 3
                 });
                 context.CustomFields.Add(new CustomField
                 {
                     FieldType = FieldType.Select,
                     FieldName = "Test Select",
-                    PossibleValues = "Select Value7, Select Value8, Select Value9"
+                    PossibleValues = "Select Value7, Select Value8, Select Value9",
+                    Sort = 4
                 });
                 context.SaveChanges();
             }
@@ -61,15 +66,15 @@ namespace DAL.Extensions
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
-                    FieldValue = "Test text field value", CustomFieldId = 2, ProjectTaskId = 1
+                    FieldValue = "Checkbox Value1", CustomFieldId = 2, ProjectTaskId = 1
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
-                    FieldValue = "Test text field value", CustomFieldId = 3, ProjectTaskId = 1
+                    FieldValue = "Radio Value5", CustomFieldId = 3, ProjectTaskId = 1
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
-                    FieldValue = "Test text field value", CustomFieldId = 4, ProjectTaskId = 1
+                    FieldValue = "Select Value9", CustomFieldId = 4, ProjectTaskId = 1
                 });
                 context.SaveChanges();
             }

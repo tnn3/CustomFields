@@ -8,10 +8,10 @@ namespace Domain.Enums
         Radio,
         Checkbox,
         Select,
-        Date,
+        Textarea,
+        /*Date,
         Datetime,
-        Textarea
-        /*Email,
+        Email,
         Number,
         Range,
         Time,

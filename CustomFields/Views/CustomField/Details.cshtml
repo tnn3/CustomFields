@@ -1,0 +1,58 @@
+﻿@model Domain.CustomField
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>CustomField</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FieldName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FieldName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FieldType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FieldType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PossibleValues)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PossibleValues)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MinLength)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MinLength)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxLength)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaxLength)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsRequired)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsRequired)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RegexPattern)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegexPattern)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

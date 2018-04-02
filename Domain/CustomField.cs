@@ -25,6 +25,8 @@ namespace Domain
         public bool IsRequired { get; set; }
         [Display(Name = "Validation pattern")]
         public string RegexPattern { get; set; }
+        public int Sort { get; set; }
+        public bool Disabled { get; set; }
 
         public virtual List<CustomFieldInTasks> Tasks { get; set; }
     }

@@ -56,20 +56,20 @@ namespace WebApplication.Helpers
                         field.Type = typeof(bool);
                         field.Choices = customField.PossibleValues.Split(',');
                         break;
-                    case FieldType.Date:
-                        field.Type = typeof(DateTime);
-                        field.GetCustomAttributes = () => new object[]
-                        {
-                            new DateAttribute()
-                        };
-                        break;
-                    case FieldType.Datetime:
-                        field.Type = typeof(DateTime);
-                        field.GetCustomAttributes = () => new object[]
-                        {
-                            new DateTimeAttribute()
-                        };
-                        break;
+                    //case FieldType.Date:
+                    //    field.Type = typeof(DateTime);
+                    //    field.GetCustomAttributes = () => new object[]
+                    //    {
+                    //        new DateAttribute()
+                    //    };
+                    //    break;
+                    //case FieldType.Datetime:
+                    //    field.Type = typeof(DateTime);
+                    //    field.GetCustomAttributes = () => new object[]
+                    //    {
+                    //        new DateTimeAttribute()
+                    //    };
+                    //    break;
                     case FieldType.Textarea:
                         field.Type = typeof(string);
                         field.GetCustomAttributes = () => new object[]
