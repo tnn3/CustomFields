@@ -1,18 +1,29 @@
 ﻿"use strict";
 $(document).ready(function () {
-    $("#FieldType").change(function () {
+    const fieldType = "#CustomField_FieldType";
+    let selectedValue = $(fieldType).val();
+
+    if (selectedValue != undefined) {
+        changeFields();
+    }
+
+    $(fieldType).change(function () {
         $(".hideable").addClass("hidden");
-        const selectedValue = $("#FieldType").val();
-        switch (selectedValue) {
-            case "0":
-            case "6":
-                $("#field-lengths").removeClass("hidden");
-                break;
-            case "1":
-            case "2":
-            case "3":
-                $("#field-values").removeClass("hidden");
-                break;
-        }
+        selectedValue = $(fieldType).val();
+        changeFields();
     });
+
+    function changeFields() {
+        switch (selectedValue) {
+        case "0":
+        case "4":
+            $("#text-fields").removeClass("hidden");
+            break;
+        case "1":
+        case "2":
+        case "3":
+            $("#field-values").removeClass("hidden");
+            break;
+        }
+    }
 });

@@ -1,44 +1,65 @@
 ﻿@using Domain.Enums
-@model Domain.CustomField
+@using WebApplication.Helpers
+@model CustomFieldViewModel
+
+@{
+    bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField?.FieldType);
+    bool editing = Model.CustomField?.FieldType != null;
+}
 
 <div class="form-group">
-    <label asp-for="FieldName" class="control-label"></label>
-    <input asp-for="FieldName" class="form-control" />
-    <span asp-validation-for="FieldName" class="text-danger"></span>
+    <label asp-for="CustomField.FieldName" class="control-label"></label>
+    <input asp-for="CustomField.FieldName" class="form-control" />
+    <span asp-validation-for="CustomField.FieldName" class="text-danger"></span>
 </div>
-<div class="form-group">
-    <label asp-for="FieldType" class="control-label"></label>
-    <select asp-for="FieldType" asp-items="Html.GetEnumSelectList<FieldType>()" class="form-control">
-        <option disabled selected>-- Select type --</option>
-    </select>
-    <span asp-validation-for="FieldType" class="text-danger"></span>
-</div>
-<div id="field-values" class="form-group hidden hideable">
-    <label asp-for="PossibleValues" class="control-label"></label>
-    <input asp-for="PossibleValues" class="form-control" />
-    <span asp-validation-for="PossibleValues" class="text-danger"></span>
-</div>
-<div id="field-lengths" class="hidden hideable">
+@if (!Model.HasExistingData)
+{
     <div class="form-group">
-        <label asp-for="MinLength" class="control-label"></label>
-        <input asp-for="MinLength" class="form-control" />
-        <span asp-validation-for="MinLength" class="text-danger"></span>
+        <label asp-for="CustomField.FieldType" class="control-label"></label>
+        <select asp-for="CustomField.FieldType" asp-items="Html.GetEnumSelectList<FieldType>()" class="form-control">
+        @if (!editing)
+        {
+            <option disabled selected>-- Select type --</option>
+        }
+        </select>
+        <span asp-validation-for="CustomField.FieldType" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="MaxLength" class="control-label"></label>
-        <input asp-for="MaxLength" class="form-control" />
-        <span asp-validation-for="MaxLength" class="text-danger"></span>
+}
+
+@if (!Model.HasExistingData || isOfChoosable)
+{
+    <div id="field-values" class="form-group hidden hideable">
+        <label asp-for="CustomField.PossibleValues" class="control-label"></label>
+        <input asp-for="CustomField.PossibleValues" class="form-control" />
+        <span asp-validation-for="CustomField.PossibleValues" class="text-danger"></span>
     </div>
-</div>
+}
+
+@if (!Model.HasExistingData || !isOfChoosable)
+{
+    <div id="text-fields" class="hidden hideable">
+        <div class="form-group">
+            <label asp-for="CustomField.MinLength" class="control-label"></label>
+            <input asp-for="CustomField.MinLength" class="form-control" />
+            <span asp-validation-for="CustomField.MinLength" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CustomField.MaxLength" class="control-label"></label>
+            <input asp-for="CustomField.MaxLength" class="form-control" />
+            <span asp-validation-for="CustomField.MaxLength" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CustomField.RegexPattern" class="control-label"></label>
+            <input asp-for="CustomField.RegexPattern" class="form-control" />
+            <span asp-validation-for="CustomField.RegexPattern" class="text-danger"></span>
+        </div>
+    </div>
+}
+
 <div class="form-group">
     <div class="checkbox">
         <label>
-            <input asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
+            <input asp-for="CustomField.IsRequired" /> @Html.DisplayNameFor(model => model.CustomField.IsRequired)
         </label>
     </div>
-</div>
-<div class="form-group">
-    <label asp-for="RegexPattern" class="control-label"></label>
-    <input asp-for="RegexPattern" class="form-control" />
-    <span asp-validation-for="RegexPattern" class="text-danger"></span>
 </div>
