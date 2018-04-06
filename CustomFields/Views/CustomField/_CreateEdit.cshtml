@@ -5,6 +5,7 @@
 @{
     bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField?.FieldType);
     bool editing = Model.CustomField?.FieldType != null;
+    string hiddenClass = !Model.HasExistingData || !editing ? "hidden" : "";
 }
 
 <div class="form-group">
@@ -28,7 +29,7 @@
 
 @if (!Model.HasExistingData || isOfChoosable)
 {
-    <div id="field-values" class="form-group hidden hideable">
+    <div id="field-values" class="form-group @hiddenClass hideable">
         <label asp-for="CustomField.PossibleValues" class="control-label"></label>
         <input asp-for="CustomField.PossibleValues" class="form-control" />
         <span asp-validation-for="CustomField.PossibleValues" class="text-danger"></span>
@@ -37,7 +38,7 @@
 
 @if (!Model.HasExistingData || !isOfChoosable)
 {
-    <div id="text-fields" class="hidden hideable">
+    <div id="text-fields" class="@hiddenClass hideable">
         <div class="form-group">
             <label asp-for="CustomField.MinLength" class="control-label"></label>
             <input asp-for="CustomField.MinLength" class="form-control" />

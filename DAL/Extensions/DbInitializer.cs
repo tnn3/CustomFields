@@ -27,7 +27,8 @@ namespace DAL.Extensions
                     MinLength = 0,
                     MaxLength = 10,
                     Sort = 1,
-                    RegexPattern = "^[0-9A-Za-z ]+$"
+                    RegexPattern = "^[0-9A-Za-z ]+$",
+                    Status = FieldStatus.Active
                 });
                 context.CustomFields.Add(new CustomField
                 {
@@ -35,20 +36,37 @@ namespace DAL.Extensions
                     FieldName = "Test Checkbox",
                     PossibleValues = "Checkbox Value1, Checkbox Value2, Checkbox Value3",
                     Sort = 2,
+                    Status = FieldStatus.Active
                 });
                 context.CustomFields.Add(new CustomField
                 {
                     FieldType = FieldType.Radio,
                     FieldName = "Test Radio",
                     PossibleValues = "Radio Value4, Radio Value5, Radio Value6",
-                    Sort = 3
+                    Sort = 3,
+                    Status = FieldStatus.Active
                 });
                 context.CustomFields.Add(new CustomField
                 {
                     FieldType = FieldType.Select,
                     FieldName = "Test Select",
                     PossibleValues = "Select Value7, Select Value8, Select Value9",
-                    Sort = 4
+                    Sort = 4,
+                    Status = FieldStatus.Active
+                });
+                context.CustomFields.Add(new CustomField
+                {
+                    FieldType = FieldType.Text,
+                    FieldName = "Old removed field",
+                    Sort = 5,
+                    Status = FieldStatus.Hidden
+                });
+                context.CustomFields.Add(new CustomField
+                {
+                    FieldType = FieldType.Text,
+                    FieldName = "Only used on create",
+                    Sort = 5,
+                    Status = FieldStatus.Disabled
                 });
                 context.SaveChanges();
             }
@@ -75,6 +93,10 @@ namespace DAL.Extensions
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
                     FieldValue = "Select Value9", CustomFieldId = 4, ProjectTaskId = 1
+                });
+                context.CustomFieldInTasks.Add(new CustomFieldInTasks
+                {
+                    FieldValue = "Disabled field", CustomFieldId = 6, ProjectTaskId = 1
                 });
                 context.SaveChanges();
             }

@@ -4,26 +4,26 @@ $(document).ready(function () {
     let selectedValue = $(fieldType).val();
 
     if (selectedValue != undefined) {
-        changeFields();
+        changeFieldVisibility(selectedValue);
     }
 
     $(fieldType).change(function () {
-        $(".hideable").addClass("hidden");
         selectedValue = $(fieldType).val();
-        changeFields();
+        changeFieldVisibility(selectedValue);
     });
-
-    function changeFields() {
-        switch (selectedValue) {
-        case "0":
-        case "4":
-            $("#text-fields").removeClass("hidden");
-            break;
-        case "1":
-        case "2":
-        case "3":
-            $("#field-values").removeClass("hidden");
-            break;
-        }
-    }
 });
+
+function changeFieldVisibility(selectedValue) {
+    $(".hideable").addClass("hidden");
+    switch (selectedValue) {
+    case "0":
+    case "4":
+        $("#text-fields").removeClass("hidden");
+        break;
+    case "1":
+    case "2":
+    case "3":
+        $("#field-values").removeClass("hidden");
+        break;
+    }
+}
