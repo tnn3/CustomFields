@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Interfaces.Repositories;
 using Domain;
+using Domain.Enums;
 using Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +15,22 @@ namespace DAL.Repositories
         {
         }
 
+        public override async Task<IEnumerable<CustomField>> AllAsync()
+        {
+            return await RepositoryDbSet
+                .Where(c => c.Status != FieldStatus.Hidden)
+                .ToListAsync();
+        }
+
         public Task<List<CustomField>> AllWithReferencesAsync()
+        {
+            return RepositoryDbSet
+                .Where(c => c.Status != FieldStatus.Hidden)
+                .Include(c => c.Tasks)
+                .ToListAsync();
+        }
+
+        public Task<List<CustomField>> AllIncludingHiddenAsync()
         {
             return RepositoryDbSet
                 .Include(c => c.Tasks)

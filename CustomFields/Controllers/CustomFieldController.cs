@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Interfaces.Repositories;
@@ -130,7 +131,8 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var customField = await _customFieldRepository.FindAsync(id);
-            _customFieldRepository.Remove(customField);
+            customField.Status = FieldStatus.Hidden;
+            _customFieldRepository.Update(customField);
             await _customFieldRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

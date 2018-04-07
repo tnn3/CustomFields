@@ -7,6 +7,7 @@ namespace Interfaces.Repositories
     public interface ICustomFieldRepository : IBaseRepository<CustomField>
     {
         Task<List<CustomField>> AllWithReferencesAsync();
+        Task<List<CustomField>> AllIncludingHiddenAsync();
         Task<CustomField> FindWithReferencesAsync(int id);
     }
 }
