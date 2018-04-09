@@ -18,9 +18,9 @@ namespace Domain
         [Display(Name = "Values to choose from")]
         public string PossibleValues { get; set; }
         [Display(Name = "Minimum length of field value")]
-        public int MinLength { get; set; }
+        public int? MinLength { get; set; }
         [Display(Name = "Maxiumum length of field value")]
-        public int MaxLength { get; set; }
+        public int? MaxLength { get; set; }
         [Display(Name = "Field value is required")]
         public bool IsRequired { get; set; }
         [Display(Name = "Validation pattern")]

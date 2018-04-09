@@ -91,7 +91,12 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid)
+            {
+                var customField = _customFieldRepository.FindWithReferencesAsync(id).Result;
+                vm.HasExistingData = customField.Tasks.Any();
+                return View(vm);
+            }
             try
             {
                 _customFieldRepository.Update(vm.CustomField);
