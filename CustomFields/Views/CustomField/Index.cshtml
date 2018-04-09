@@ -1,5 +1,5 @@
 ﻿@using Domain.Enums
-@model IEnumerable<Domain.CustomField>
+@model CustomFieldIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,36 +9,39 @@
 
 <p>
     <a asp-action="Create" class="btn btn-success">Create New</a>
-    <a asp-action="" class="btn btn-default">Sort</a>
+
+    @if (Model.ShowHidden)
+    {
+        <a asp-action="Index" class="btn btn-default">Hide hidden fields</a>
+    }
+    else
+    {
+        <a asp-action="Index" asp-route-hidden="true" class="btn btn-default">Show all fields</a>
+    }
+
 </p>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Sort)
+                @Html.DisplayNameFor(model => model.Fields.First().FieldName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FieldName)
+                @Html.DisplayNameFor(model => model.Fields.First().FieldType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FieldType)
+                @Html.DisplayNameFor(model => model.Fields.First().IsRequired)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsRequired)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.Fields.First().Status)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Fields) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sort)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FieldName)
             </td>
@@ -53,8 +56,14 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                @if (item.Status == FieldStatus.Hidden)
+                {
+                <a asp-action="Activate" asp-route-id="@item.Id" class="btn btn-success">Activate</a>
+                }
+                else
+                {
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Hide</a>
+                }
             </td>
         </tr>
 }

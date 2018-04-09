@@ -18,9 +18,20 @@ namespace WebApplication.Controllers
         }
 
         // GET: CustomFields
-        public async Task<IActionResult> Index() {
-            var fields = await _customFieldRepository.AllAsync();
-            return View(fields.OrderBy(f => f.Sort));
+        public async Task<IActionResult> Index(bool hidden)
+        {
+            
+            var fields = hidden
+                ? await _customFieldRepository.AllIncludingHiddenAsync()
+                : await _customFieldRepository.AllAsync();
+
+            var vm = new CustomFieldIndexViewModel
+            {
+                Fields = fields.OrderBy(f => f.Sort),
+                ShowHidden = hidden
+            };
+
+            return View(vm);
         }
 
         // GET: CustomFields/Details/5
@@ -43,13 +54,13 @@ namespace WebApplication.Controllers
         // GET: CustomFields/Create
         public IActionResult Create()
         {
-            return View(new CustomFieldViewModel());
+            return View(new CustomFieldCreateEditViewModel());
         }
 
         // POST: CustomFields/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CustomFieldViewModel vm)
+        public async Task<IActionResult> Create(CustomFieldCreateEditViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
 
@@ -72,7 +83,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var vm = new CustomFieldViewModel
+            var vm = new CustomFieldCreateEditViewModel
             {
                 CustomField = customField,
                 HasExistingData = customField.Tasks.Any()
@@ -84,7 +95,7 @@ namespace WebApplication.Controllers
         // POST: CustomFields/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CustomFieldViewModel vm)
+        public async Task<IActionResult> Edit(int id, CustomFieldCreateEditViewModel vm)
         {
             if (id != vm.CustomField.Id)
             {
@@ -127,16 +138,27 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            return View(customField);
+            customField.Status = FieldStatus.Hidden;
+            _customFieldRepository.Update(customField);
+            await _customFieldRepository.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: CustomFields/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        // GET: CustomFields/Activate
+        public async Task<IActionResult> Activate(int? id)
         {
-            var customField = await _customFieldRepository.FindAsync(id);
-            customField.Status = FieldStatus.Hidden;
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customField = await _customFieldRepository.FindAsync(id.Value);
+            if (customField == null)
+            {
+                return NotFound();
+            }
+
+            customField.Status = FieldStatus.Active;
             _customFieldRepository.Update(customField);
             await _customFieldRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
