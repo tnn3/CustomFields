@@ -49,13 +49,11 @@ namespace DAL.Repositories
 
         public virtual int SaveChanges()
         {
-            CheckDisposed();
             return RepositoryDbContext.SaveChanges();
         }
 
         public virtual Task<int> SaveChangesAsync()
         {
-            CheckDisposed();
             return RepositoryDbContext.SaveChangesAsync();
         }
 
@@ -67,43 +65,5 @@ namespace DAL.Repositories
         }
 
         public bool Exists(int id) => RepositoryDbSet.Find(id) != null;
-
-        #region IDisposable Implementation
-
-        private bool _isDisposed;
-
-        protected void CheckDisposed()
-        {
-            if (_isDisposed) throw new ObjectDisposedException("Already disposed and cannot be used anymore.");
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    if (RepositoryDbContext != null)
-                    {
-                        RepositoryDbContext.Dispose();
-                        RepositoryDbContext = null;
-                    }
-                }
-            }
-            _isDisposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        ~BaseRepository()
-        {
-            Dispose(false);
-        }
-
-        #endregion
     }
 }

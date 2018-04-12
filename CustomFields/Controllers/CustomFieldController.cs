@@ -110,11 +110,8 @@ namespace WebApplication.Controllers
             }
             try
             {
-                if (vm.CustomField.Status != FieldStatus.Disabled)
-                {
-                    vm.CustomField.Status = customField.Status;
-                    _customFieldRepository.Update(vm.CustomField);
-                }
+                vm.CustomField.Status = customField.Status;
+                _customFieldRepository.Update(vm.CustomField);
                 await _customFieldRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

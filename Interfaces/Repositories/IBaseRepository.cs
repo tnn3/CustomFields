@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Interfaces.Repositories
 {
-    public interface IBaseRepository<TEntity> : IDisposable where TEntity : class
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
         IEnumerable<TEntity> All();
         Task<IEnumerable<TEntity>> AllAsync();

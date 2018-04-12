@@ -6,7 +6,6 @@
     bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField?.FieldType);
     bool editing = Model.CustomField?.FieldType != null;
     string hiddenClass = !Model.HasExistingData || !editing ? "hidden" : "";
-    bool disabledValue = Model?.CustomField?.Status == FieldStatus.Disabled; 
 }
 
 <div class="form-group">
@@ -66,10 +65,14 @@
     </div>
 </div>
 
-<div class="form-group">
-    <div class="checkbox">
-        <label>
-            <input name="CustomField.Status" type="checkbox" value="@((int)FieldStatus.Disabled)" checked="@disabledValue"/> @FieldStatus.Disabled
-        </label>
+@if (!editing)
+{
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input name="CustomField.Status" type="checkbox" value="@((int)FieldStatus.Active)"/>Activate field after create
+            </label>
+        </div>
     </div>
-</div>
+}
+

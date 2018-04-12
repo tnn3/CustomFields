@@ -61,13 +61,6 @@ namespace DAL.Extensions
                     Sort = 5,
                     Status = FieldStatus.Hidden
                 });
-                context.CustomFields.Add(new CustomField
-                {
-                    FieldType = FieldType.Text,
-                    FieldName = "Only used on create",
-                    Sort = 5,
-                    Status = FieldStatus.Disabled
-                });
                 context.SaveChanges();
             }
 
