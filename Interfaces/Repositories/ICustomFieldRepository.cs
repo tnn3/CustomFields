@@ -9,5 +9,6 @@ namespace Interfaces.Repositories
         Task<List<CustomField>> AllWithReferencesAsync();
         Task<List<CustomField>> AllIncludingHiddenAsync();
         Task<CustomField> FindWithReferencesAsync(int id);
+        CustomField FindWithReferencesNoTracking(int id);
     }
 }

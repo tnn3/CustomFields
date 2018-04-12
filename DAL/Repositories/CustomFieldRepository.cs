@@ -43,5 +43,13 @@ namespace DAL.Repositories
                 .Include(c => c.Tasks)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
+
+        public CustomField FindWithReferencesNoTracking(int id)
+        {
+            return RepositoryDbSet
+                .Include(c => c.Tasks)
+                .AsNoTracking()
+                .SingleOrDefault(c => c.Id == id);
+        }
     }
 }

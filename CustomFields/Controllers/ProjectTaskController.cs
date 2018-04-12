@@ -48,7 +48,7 @@ namespace WebApplication.Controllers
             var customFields = await _customFieldRepository.AllWithReferencesAsync();
             var vm = new ProjectTaskViewModel
             {
-                PropertyVms = FormFieldHelper.MakeCustomFields<ProjectTask>(customFields)
+                PropertyVms = FormFieldHelper.MakeCustomFields<ProjectTask>(customFields, false)
             };
 
             return View(vm);
@@ -78,7 +78,14 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-            return View(projectTask);
+
+            var customFields = await _customFieldRepository.AllWithReferencesAsync();
+            var vm = new ProjectTaskViewModel
+            {
+                ProjectTask = projectTask,
+                PropertyVms = FormFieldHelper.MakeCustomFields<ProjectTask>(customFields, true, id.Value)
+            };
+            return View(vm);
         }
 
         // POST: ProjectTask/Edit/5

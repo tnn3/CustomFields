@@ -102,15 +102,19 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
+            var customField = _customFieldRepository.FindWithReferencesNoTracking(id);
             if (!ModelState.IsValid)
             {
-                var customField = _customFieldRepository.FindWithReferencesAsync(id).Result;
                 vm.HasExistingData = customField.Tasks.Any();
                 return View(vm);
             }
             try
             {
-                _customFieldRepository.Update(vm.CustomField);
+                if (vm.CustomField.Status != FieldStatus.Disabled)
+                {
+                    vm.CustomField.Status = customField.Status;
+                    _customFieldRepository.Update(vm.CustomField);
+                }
                 await _customFieldRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Domain;
 using Domain.Enums;
 using FormFactory;
@@ -9,12 +9,15 @@ namespace WebApplication.Helpers
 {
     public class FormFieldHelper
     {
-        public static PropertyVm[] MakeCustomFields<T>(List<CustomField> customFields)
+        public static PropertyVm[] MakeCustomFields<T>(List<CustomField> customFields, bool enableReadonly, int? formId = null)
         {
             var propertyvm = new List<PropertyVm>();
             var idCounter = 0;
+
             foreach (var customField in customFields) {
-                var nameStart = typeof(T).Name + "." + nameof(ProjectTask.CustomFields) + "[" + idCounter++ + "].";
+                bool editing = formId != null && customField.Tasks != null;
+
+                var nameStart = $"{ typeof(T).Name }.{ nameof(ProjectTask.CustomFields) }[{ idCounter++}].";
                 propertyvm.Add(new PropertyVm(typeof(string), nameStart + nameof(CustomFieldInTasks.CustomFieldId)) {
                     IsHidden = true,
                     Value = customField.Id
@@ -25,13 +28,30 @@ namespace WebApplication.Helpers
                     DisplayName = customField.FieldName,
                     NotOptional = customField.IsRequired,
                     Name = nameStart + nameof(CustomFieldInTasks.FieldValue),
-                    Id = typeof(T).Name + "_" + nameof(ProjectTask.CustomFields) + "_" + customField.Id + "__" + nameof(CustomFieldInTasks.FieldValue)
+                    Id = typeof(T).Name + "_" + nameof(ProjectTask.CustomFields) + "_" + customField.Id + "__" + nameof(CustomFieldInTasks.FieldValue),
+                    Readonly = enableReadonly && customField.Status == FieldStatus.Disabled
                 };
+
+                List<CustomFieldInTasks> formFields = new List<CustomFieldInTasks>();
+
+                if (editing)
+                {
+                    formFields = customField.Tasks.Where(f => f.ProjectTaskId == formId).ToList();
+                }
+
+                if (customField.FieldType is FieldType.Text || customField.FieldType is FieldType.Textarea ||
+                    customField.FieldType is FieldType.Select || customField.FieldType is FieldType.Radio)
+                {
+                    field.Type = typeof(string);
+                    if (formFields.Any())
+                    {
+                        field.Value = formFields.First().FieldValue;
+                    }
+                }
+
                 switch (customField.FieldType)
                 {
                     case FieldType.Text:
-                        field.Type = typeof(string);
-
                         if (!string.IsNullOrEmpty(customField.RegexPattern))
                         {
                             field.GetCustomAttributes = () => new object[]
@@ -41,7 +61,6 @@ namespace WebApplication.Helpers
                         }
                         break;
                     case FieldType.Radio:
-                        field.Type = typeof(string);
                         field.Choices = customField.PossibleValues.Split(',');
                         field.GetCustomAttributes = () => new object[]
                         {
@@ -49,32 +68,16 @@ namespace WebApplication.Helpers
                         };
                         break;
                     case FieldType.Select:
-                        field.Type = typeof(string);
                         field.Choices = customField.PossibleValues.Split(',');
                         break;
                     case FieldType.Checkbox:
                         field.Type = typeof(bool);
                         field.Choices = customField.PossibleValues.Split(',');
                         break;
-                    //case FieldType.Date:
-                    //    field.Type = typeof(DateTime);
-                    //    field.GetCustomAttributes = () => new object[]
-                    //    {
-                    //        new DateAttribute()
-                    //    };
-                    //    break;
-                    //case FieldType.Datetime:
-                    //    field.Type = typeof(DateTime);
-                    //    field.GetCustomAttributes = () => new object[]
-                    //    {
-                    //        new DateTimeAttribute()
-                    //    };
-                    //    break;
                     case FieldType.Textarea:
-                        field.Type = typeof(string);
                         field.GetCustomAttributes = () => new object[]
                         {
-                            new MultilineTextAttribute(),
+                            new MultilineTextAttribute()
                         };
                         break;
                     default:
