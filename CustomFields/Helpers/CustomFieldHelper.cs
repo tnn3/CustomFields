@@ -6,7 +6,12 @@ namespace WebApplication.Helpers
     {
         public static bool IsOfChoosableType(FieldType? type)
         {
-            return type == FieldType.Checkbox || type == FieldType.Radio || type == FieldType.Select;
+            return type == FieldType.Radio || type == FieldType.Select;
+        }
+
+        public static bool IsOfTextType(FieldType? type)
+        {
+            return type == FieldType.Text || type == FieldType.Textarea;
         }
     }
 }

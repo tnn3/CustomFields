@@ -34,7 +34,6 @@ namespace DAL.Extensions
                 {
                     FieldType = FieldType.Checkbox,
                     FieldName = "Test Checkbox",
-                    PossibleValues = "Checkbox Value1, Checkbox Value2, Checkbox Value3",
                     Sort = 2,
                     Status = FieldStatus.Active
                 });

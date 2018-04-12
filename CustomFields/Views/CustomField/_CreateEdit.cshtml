@@ -4,6 +4,7 @@
 
 @{
     bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField?.FieldType);
+    bool isOfTextType = CustomFieldHelper.IsOfTextType(Model.CustomField?.FieldType);
     bool editing = Model.CustomField?.FieldType != null;
     string hiddenClass = !Model.HasExistingData || !editing ? "hidden" : "";
 }
@@ -36,7 +37,7 @@
     </div>
 }
 
-@if (!Model.HasExistingData || !isOfChoosable)
+@if (!Model.HasExistingData || isOfTextType)
 {
     <div id="text-fields" class="@hiddenClass hideable">
         <div class="form-group">

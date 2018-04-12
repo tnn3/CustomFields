@@ -21,7 +21,6 @@ function changeFieldVisibility(selectedValue) {
         $("#text-fields").removeClass("hidden");
         break;
     case "1":
-    case "2":
     case "3":
         $("#field-values").removeClass("hidden");
         break;

@@ -37,12 +37,6 @@ namespace WebApplication.Helpers
                 if (editing)
                 {
                     formFields = customField.Tasks.Where(f => f.ProjectTaskId == formId).ToList();
-                }
-
-                if (customField.FieldType is FieldType.Text || customField.FieldType is FieldType.Textarea ||
-                    customField.FieldType is FieldType.Select || customField.FieldType is FieldType.Radio)
-                {
-                    field.Type = typeof(string);
                     if (formFields.Any())
                     {
                         field.Value = formFields.First().FieldValue;
@@ -72,16 +66,12 @@ namespace WebApplication.Helpers
                         break;
                     case FieldType.Checkbox:
                         field.Type = typeof(bool);
-                        field.Choices = customField.PossibleValues.Split(',');
                         break;
                     case FieldType.Textarea:
                         field.GetCustomAttributes = () => new object[]
                         {
                             new MultilineTextAttribute()
                         };
-                        break;
-                    default:
-                        field.Type = typeof(string);
                         break;
                 }
                 propertyvm.Add(field);
