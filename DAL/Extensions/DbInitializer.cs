@@ -24,7 +24,6 @@ namespace DAL.Extensions
                     FieldType = FieldType.Text,
                     FieldName = "Test Text Field",
                     IsRequired = true,
-                    MinLength = 0,
                     MaxLength = 10,
                     Sort = 1,
                     RegexPattern = "^[0-9A-Za-z ]+$",
@@ -57,8 +56,15 @@ namespace DAL.Extensions
                 {
                     FieldType = FieldType.Text,
                     FieldName = "Old removed field",
-                    Sort = 5,
+                    Sort = 0,
                     Status = FieldStatus.Hidden
+                });
+                context.CustomFields.Add(new CustomField
+                {
+                    FieldType = FieldType.Textarea,
+                    FieldName = "Test textarea",
+                    Sort = 5,
+                    Status = FieldStatus.Active
                 });
                 context.SaveChanges();
             }
@@ -76,7 +82,7 @@ namespace DAL.Extensions
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
-                    FieldValue = "Checkbox Value1", CustomFieldId = 2, ProjectTaskId = 1
+                    FieldValue = "true", CustomFieldId = 2, ProjectTaskId = 1
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
@@ -88,7 +94,7 @@ namespace DAL.Extensions
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
-                    FieldValue = "Disabled field", CustomFieldId = 6, ProjectTaskId = 1
+                    FieldValue = "Textarea long text", CustomFieldId = 6, ProjectTaskId = 1
                 });
                 context.SaveChanges();
             }

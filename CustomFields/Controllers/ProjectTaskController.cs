@@ -92,37 +92,50 @@ namespace WebApplication.Controllers
         // POST: ProjectTask/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ProjectTaskViewModel vm)
+        public async Task<IActionResult> Edit(int id, ProjectTask projectTask)
         {
-            if (id != vm.ProjectTask.Id)
+            if (id != projectTask.Id)
             {
                 return NotFound();
             }
 
-            var projectTask = await _projectTaskRepository.FindAsyncWithReferences(id);
+            var oldTask = await _projectTaskRepository.FindAsyncWithReferences(id);
+            var taskFields = await _customFieldRepository.AllWithValuesByTaskId(id);
 
-            foreach (var customField in projectTask.CustomFields)
+            foreach (var oldTaskField in oldTask.CustomFields)
             {
-                foreach (var vmField in vm.ProjectTask.CustomFields)
+                foreach (var vmField in projectTask.CustomFields)
                 {
-                    if (vmField.CustomFieldId == customField.CustomFieldId)
-                    {
-                        customField.FieldValue = vmField.FieldValue;
-                    }
+                    if (vmField.CustomFieldId != oldTaskField.CustomFieldId) continue;
+
+                    var taskField = taskFields.First(c => c.Id == oldTaskField.CustomFieldId);
+
+                    var validationErrors = CustomFieldHelper.ValidateCustomField(taskField, vmField.FieldValue);
+                    validationErrors.ForEach(error => ModelState.AddModelError(string.Empty, error));
+
+                    oldTaskField.FieldValue = vmField.FieldValue;
                 }
             }
-            projectTask.Title = vm.ProjectTask.Title;
+            oldTask.Title = projectTask.Title;
 
-            if (!ModelState.IsValid) return View(vm.ProjectTask);
+            if (!ModelState.IsValid)
+            {
+                var vm = new ProjectTaskViewModel
+                {
+                    ProjectTask = projectTask,
+                    PropertyVms = FormFieldHelper.MakeCustomFields<ProjectTask>(taskFields, true, id)
+                };
+                return View(vm);
+            }
 
             try
             {
-                _projectTaskRepository.Update(projectTask);
+                _projectTaskRepository.Update(oldTask);
                 await _projectTaskRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_projectTaskRepository.Exists(vm.ProjectTask.Id))
+                if (!_projectTaskRepository.Exists(projectTask.Id))
                 {
                     return NotFound();
                 }
