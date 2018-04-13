@@ -79,7 +79,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var customFields = await _customFieldRepository.AllWithReferencesAsync();
+            var customFields = await _customFieldRepository.AllWithValuesByTaskId(id.Value);
             var vm = new ProjectTaskViewModel
             {
                 ProjectTask = projectTask,

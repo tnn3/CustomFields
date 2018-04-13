@@ -1,9 +1,5 @@
-﻿@*@using System*@
-@using System
-@using System.Collections.Generic
-@using FormFactory.Attributes
+﻿@using FormFactory.Attributes
 @using System.Linq
-@using FormFactory.Attributes
 @using FormFactory
 @using FormFactory.AspMvc
 @model PropertyVm
@@ -29,14 +25,15 @@
     } else {
         <select id="@Model.Id" name="@Model.Name" class="form-control" @Html.Raw(Model.Readonly()) @Html.Raw(Model.Disabled())>
             @foreach(var option in choices) {
-                <option value="@option.Item2" @Html.Raw((Model.Value != null && option.Item2 == Model.Value.ToString()).Attr("selected"))>@option.Item1</option>
+                var isSelected = Model.Value != null && option.Item2 == Model.Value.ToString();
+                @:<option value="@option.Item2" @Html.Raw(isSelected.Attr("selected"))>@option.Item1</option>
             }
         </select>
     }
 } else {
     var dataAttributes = Model.GetCustomAttributes();
     var inputType = dataAttributes.Any(da => da is PasswordAttribute) ? "password" : "text";
-    var placeHolderText = Model.GetCustomAttributes().OfType<FormFactory.Attributes.DisplayAttribute>().Select(a => a.Prompt).FirstOrDefault();
+    var placeHolderText = Model.GetCustomAttributes().OfType<DisplayAttribute>().Select(a => a.Prompt).FirstOrDefault();
 
     var suggestionsAttribute = Model.GetCustomAttributes().OfType<SuggestionsUrlAttribute>().SingleOrDefault();
     var needsAutoComplete = (!Model.Readonly && (suggestionsAttribute != null || (Model.Suggestions != null && Model.Suggestions.Cast<object>().Any())));

@@ -51,5 +51,13 @@ namespace DAL.Repositories
                 .AsNoTracking()
                 .SingleOrDefault(c => c.Id == id);
         }
+
+        public Task<List<CustomField>> AllWithValuesByTaskId(int projectTaskId)
+        {
+            return RepositoryDbSet
+                .Include(c => c.Tasks)
+                .Where(c => c.Tasks.Any(a => a.ProjectTaskId == projectTaskId))
+                .ToListAsync();
+        }
     }
 }
