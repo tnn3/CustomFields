@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Domain;
 using Interfaces;
@@ -25,6 +26,7 @@ namespace DAL.Repositories
             return await RepositoryDbSet
                 .Include(ct => ct.CustomFields)
                     .ThenInclude(c => c.CustomField)
+                .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
         }
     }

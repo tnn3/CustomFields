@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain;
@@ -91,14 +92,28 @@ namespace WebApplication.Controllers
         // POST: ProjectTask/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ProjectTask projectTask)
+        public async Task<IActionResult> Edit(int id, ProjectTaskViewModel vm)
         {
-            if (id != projectTask.Id)
+            if (id != vm.ProjectTask.Id)
             {
                 return NotFound();
             }
 
-            if (!ModelState.IsValid) return View(projectTask);
+            var projectTask = await _projectTaskRepository.FindAsyncWithReferences(id);
+
+            foreach (var customField in projectTask.CustomFields)
+            {
+                foreach (var vmField in vm.ProjectTask.CustomFields)
+                {
+                    if (vmField.CustomFieldId == customField.CustomFieldId)
+                    {
+                        customField.FieldValue = vmField.FieldValue;
+                    }
+                }
+            }
+            projectTask.Title = vm.ProjectTask.Title;
+
+            if (!ModelState.IsValid) return View(vm.ProjectTask);
 
             try
             {
@@ -107,7 +122,7 @@ namespace WebApplication.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_projectTaskRepository.Exists(projectTask.Id))
+                if (!_projectTaskRepository.Exists(vm.ProjectTask.Id))
                 {
                     return NotFound();
                 }
