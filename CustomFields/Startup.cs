@@ -27,7 +27,7 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("PSQLConnection")));
+                options.UseInMemoryDatabase("CustomFields"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
