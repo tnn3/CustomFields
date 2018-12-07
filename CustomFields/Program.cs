@@ -24,6 +24,7 @@ namespace WebApplication
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
                     DbInitializer.Seed(context, roleManager, userManager).Wait();
                 }
                 catch (Exception ex)

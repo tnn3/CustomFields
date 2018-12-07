@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CustomField.Domain\CustomFields.csproj" />
+  </ItemGroup>
+
 </Project>

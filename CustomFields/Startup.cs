@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using CustomFields.Interfaces;
 using DAL;
 using DAL.Repositories;
 using Domain;
@@ -27,6 +28,7 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
                 options.UseInMemoryDatabase("CustomFields"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -44,6 +46,8 @@ namespace WebApplication
             services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
             services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            services.AddScoped<ICustomField, CustomField2>();
+            services.AddScoped<ICustomFieldCombined, CustomFieldInTasks>();
 
             services.AddMvc();
 
@@ -84,7 +88,7 @@ namespace WebApplication
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=ProjectTask}/{action=Index}/{id?}");
             });
         }
     }

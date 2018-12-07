@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Domain.Enums;
+using CustomFields.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Interfaces.Repositories;
@@ -64,7 +64,7 @@ namespace WebApplication.Controllers
         {
             if (!ModelState.IsValid) return View(vm);
 
-            _customFieldRepository.Add(vm.CustomField);
+            _customFieldRepository.Add(vm.CustomField2);
             await _customFieldRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -85,8 +85,8 @@ namespace WebApplication.Controllers
 
             var vm = new CustomFieldCreateEditViewModel
             {
-                CustomField = customField,
-                HasExistingData = customField.Tasks.Any()
+                CustomField2 = customField,
+                HasExistingData = customField.CombinedFields.Any()
             };
 
             return View(vm);
@@ -97,7 +97,7 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CustomFieldCreateEditViewModel vm)
         {
-            if (id != vm.CustomField.Id)
+            if (id != vm.CustomField2.Id)
             {
                 return NotFound();
             }
@@ -105,18 +105,18 @@ namespace WebApplication.Controllers
             var customField = _customFieldRepository.FindWithReferencesNoTracking(id);
             if (!ModelState.IsValid)
             {
-                vm.HasExistingData = customField.Tasks.Any();
+                vm.HasExistingData = customField.CombinedFields.Any();
                 return View(vm);
             }
             try
             {
-                vm.CustomField.Status = customField.Status;
-                _customFieldRepository.Update(vm.CustomField);
+                vm.CustomField2.Status = customField.Status;
+                _customFieldRepository.Update(vm.CustomField2);
                 await _customFieldRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_customFieldRepository.Exists(vm.CustomField.Id))
+                if (!_customFieldRepository.Exists(vm.CustomField2.Id))
                 {
                     return NotFound();
                 }

@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using CustomFields.Domain.Enums;
+using CustomFields.Interfaces;
 
 namespace CustomFields.Domain
 {
-    public class CustomField
+    public class CustomField : ICustomField
     {
         public int Id { get; set; }
         [Required]
@@ -26,5 +28,7 @@ namespace CustomFields.Domain
         public string RegexPattern { get; set; }
         public int Sort { get; set; }
         public FieldStatus Status { get; set; }
+
+        public List<CustomFieldCombined> CombinedFields { get; set; }
     }
 }

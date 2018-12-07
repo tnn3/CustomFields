@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CustomFields.Interfaces;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomFields.Domain
 {
-    public class CustomFieldCombined
+    public class CustomFieldCombined : ICustomFieldCombined
     {
         public int Id { get; set; }
 
         [MaxLength(100)]
         public string FieldValue { get; set; }
 
+        [ForeignKey("CustomField")]
         public int CustomFieldId { get; set; }
-        public CustomField CustomField { get; set; }
+        public virtual CustomField CustomField { get; set; }
     }
 }

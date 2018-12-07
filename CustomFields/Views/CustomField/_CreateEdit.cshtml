@@ -1,39 +1,39 @@
-﻿@using Domain.Enums
+﻿@using CustomFields.Domain.Enums
 @using WebApplication.Helpers
 @model CustomFieldCreateEditViewModel
 
 @{
-    bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField?.FieldType);
-    bool isOfTextType = CustomFieldHelper.IsOfTextType(Model.CustomField?.FieldType);
-    bool editing = Model.CustomField?.FieldType != null;
+    bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField2?.FieldType);
+    bool isOfTextType = CustomFieldHelper.IsOfTextType(Model.CustomField2?.FieldType);
+    bool editing = Model.CustomField2?.FieldType != null;
     string hiddenClass = !Model.HasExistingData || !editing ? "hidden" : "";
 }
 
 <div class="form-group">
-    <label asp-for="CustomField.FieldName" class="control-label"></label>
-    <input asp-for="CustomField.FieldName" class="form-control" />
-    <span asp-validation-for="CustomField.FieldName" class="text-danger"></span>
+    <label asp-for="CustomField2.FieldName" class="control-label"></label>
+    <input asp-for="CustomField2.FieldName" class="form-control" />
+    <span asp-validation-for="CustomField2.FieldName" class="text-danger"></span>
 </div>
 @if (!Model.HasExistingData)
 {
     <div class="form-group">
-        <label asp-for="CustomField.FieldType" class="control-label"></label>
-        <select asp-for="CustomField.FieldType" asp-items="Html.GetEnumSelectList<FieldType>()" class="form-control">
+        <label asp-for="CustomField2.FieldType" class="control-label"></label>
+        <select asp-for="CustomField2.FieldType" asp-items="Html.GetEnumSelectList<FieldType>()" class="form-control">
         @if (!editing)
         {
             <option disabled selected>-- Select type --</option>
         }
         </select>
-        <span asp-validation-for="CustomField.FieldType" class="text-danger"></span>
+        <span asp-validation-for="CustomField2.FieldType" class="text-danger"></span>
     </div>
 }
 
 @if (!Model.HasExistingData || isOfChoosable)
 {
     <div id="field-values" class="form-group @hiddenClass hideable">
-        <label asp-for="CustomField.PossibleValues" class="control-label"></label>
-        <input asp-for="CustomField.PossibleValues" class="form-control" />
-        <span asp-validation-for="CustomField.PossibleValues" class="text-danger"></span>
+        <label asp-for="CustomField2.PossibleValues" class="control-label"></label>
+        <input asp-for="CustomField2.PossibleValues" class="form-control" />
+        <span asp-validation-for="CustomField2.PossibleValues" class="text-danger"></span>
     </div>
 }
 
@@ -41,19 +41,19 @@
 {
     <div id="text-fields" class="@hiddenClass hideable">
         <div class="form-group">
-            <label asp-for="CustomField.MinLength" class="control-label"></label>
-            <input asp-for="CustomField.MinLength" class="form-control" />
-            <span asp-validation-for="CustomField.MinLength" class="text-danger"></span>
+            <label asp-for="CustomField2.MinLength" class="control-label"></label>
+            <input asp-for="CustomField2.MinLength" class="form-control" />
+            <span asp-validation-for="CustomField2.MinLength" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="CustomField.MaxLength" class="control-label"></label>
-            <input asp-for="CustomField.MaxLength" class="form-control" />
-            <span asp-validation-for="CustomField.MaxLength" class="text-danger"></span>
+            <label asp-for="CustomField2.MaxLength" class="control-label"></label>
+            <input asp-for="CustomField2.MaxLength" class="form-control" />
+            <span asp-validation-for="CustomField2.MaxLength" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="CustomField.RegexPattern" class="control-label"></label>
-            <input asp-for="CustomField.RegexPattern" class="form-control" />
-            <span asp-validation-for="CustomField.RegexPattern" class="text-danger"></span>
+            <label asp-for="CustomField2.RegexPattern" class="control-label"></label>
+            <input asp-for="CustomField2.RegexPattern" class="form-control" />
+            <span asp-validation-for="CustomField2.RegexPattern" class="text-danger"></span>
         </div>
     </div>
 }
@@ -61,7 +61,7 @@
 <div class="form-group">
     <div class="checkbox">
         <label>
-            <input asp-for="CustomField.IsRequired" /> @Html.DisplayNameFor(model => model.CustomField.IsRequired)
+            <input asp-for="CustomField2.IsRequired" /> @Html.DisplayNameFor(model => model.CustomField2.IsRequired)
         </label>
     </div>
 </div>

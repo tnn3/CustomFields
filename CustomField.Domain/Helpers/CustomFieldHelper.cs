@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Domain;
+using CustomFields.Domain;
 using CustomFields.Domain.Enums;
 using CustomFields.Interfaces;
 
-namespace WebApplication.Helpers
+namespace CustomFields.Helpers
 {
     public static class CustomFieldHelper
     {
