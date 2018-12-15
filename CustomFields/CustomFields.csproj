@@ -5,15 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FormFactory" Version="4.0.29" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="FormFactory">
-      <HintPath>..\..\..\.nuget\packages\formfactory\4.0.29\lib\netstandard2.0\FormFactory.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
