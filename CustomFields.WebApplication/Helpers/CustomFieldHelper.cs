@@ -3,7 +3,7 @@ using System.Linq;
 using CustomFields.Domain;
 using CustomFields.Domain.Enums;
 
-namespace CustomFields.Helpers
+namespace WebApplication.Helpers
 {
     public static class CustomFieldHelper
     {
@@ -28,7 +28,7 @@ namespace CustomFields.Helpers
 
             if (string.IsNullOrEmpty(fieldValue)) return errors;
 
-            if (IsOfTextType(customField.FieldType))
+            if (CustomFieldHelper.IsOfTextType(customField.FieldType))
             {
                 if (customField.MaxLength != null && fieldValue.Length > customField.MaxLength)
                 {
@@ -46,7 +46,7 @@ namespace CustomFields.Helpers
                 //}
             }
 
-            if (IsOfChoosableType(customField.FieldType))
+            if (CustomFieldHelper.IsOfChoosableType(customField.FieldType))
             {
                 if (!customField.PossibleValues.Split(',').Any(value => value.Equals(fieldValue)))
                 {
