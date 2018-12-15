@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using CustomFields.Domain;
 using CustomFields.Domain.Enums;
-using CustomFields.Interfaces;
 using FormFactory;
 using FormFactory.Attributes;
 
@@ -11,7 +8,7 @@ namespace CustomFields.Helpers
 {
     public class FormFieldHelper
     {
-        public static PropertyVm[] MakeCustomFields<T>(List<ICustomField> customFields, bool enableReadonly, string fieldNameReferencingCustomFields, int? formId = null)
+        public static PropertyVm[] MakeCustomFields<T>(List<CustomField> customFields, bool enableReadonly, string fieldNameReferencingCustomFields, int? formId = null)
         {
             var propertyvm = new List<PropertyVm>();
             var idCounter = 0;

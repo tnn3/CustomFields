@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using CustomFields.Domain;
 using CustomFields.Domain.Enums;
-using CustomFields.Interfaces;
 
 namespace Domain
 {
-    public class CustomField2 : CustomFields.Domain.CustomField, ICustomField
+    public class CustomField2 : CustomFields.Domain.CustomField
     {
         //public int Id { get; set; }
         //public string FieldName { get; set; }

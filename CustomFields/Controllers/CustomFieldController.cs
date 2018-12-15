@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using CustomFields.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Interfaces.Repositories;
+using CustomFields.Interfaces;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers

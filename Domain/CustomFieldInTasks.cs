@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using CustomFields.Domain;
-using CustomFields.Interfaces;
 
 namespace Domain
 {
-    public class CustomFieldInTasks : CustomFields.Domain.CustomFieldCombined, ICustomFieldCombined
+    public class CustomFieldInTasks : CustomFields.Domain.CustomFieldCombined
     {
         //public int Id { get; set; }
         //public string FieldValue { get; set; }
