@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Interfaces.Repositories;
 using Domain;
 using CustomFields.Domain.Enums;
-using CustomFields.Interfaces;
 using Interfaces;
 using Microsoft.EntityFrameworkCore;
 

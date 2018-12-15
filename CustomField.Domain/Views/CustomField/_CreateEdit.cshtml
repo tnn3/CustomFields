@@ -1,6 +1,6 @@
 ﻿@using CustomFields.Domain.Enums
-@using WebApplication.Helpers
-@model CustomFieldCreateEditViewModel
+@using CustomFields.Helpers
+@model CustomFields.ViewModels.CustomFieldCreateEditViewModel<CustomFields.Domain.CustomField>
 
 @{
     bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField2?.FieldType);

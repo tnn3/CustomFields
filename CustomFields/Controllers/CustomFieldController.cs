@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using CustomFields.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CustomFields.Interfaces;
-using WebApplication.Models;
+using Interfaces.Repositories;
+using CustomFields.ViewModels;
+using Domain;
 
 namespace WebApplication.Controllers
 {
@@ -54,13 +55,13 @@ namespace WebApplication.Controllers
         // GET: CustomFields/Create
         public IActionResult Create()
         {
-            return View(new CustomFieldCreateEditViewModel());
+            return View(new CustomFieldCreateEditViewModel<CustomField2>());
         }
 
         // POST: CustomFields/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CustomFieldCreateEditViewModel vm)
+        public async Task<IActionResult> Create(CustomFieldCreateEditViewModel<CustomField2> vm)
         {
             if (!ModelState.IsValid) return View(vm);
 
@@ -83,7 +84,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var vm = new CustomFieldCreateEditViewModel
+            var vm = new CustomFieldCreateEditViewModel<CustomField2>
             {
                 CustomField2 = customField,
                 HasExistingData = customField.CombinedFields.Any()
@@ -95,7 +96,7 @@ namespace WebApplication.Controllers
         // POST: CustomFields/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CustomFieldCreateEditViewModel vm)
+        public async Task<IActionResult> Edit(int id, CustomFieldCreateEditViewModel<CustomField2> vm)
         {
             if (id != vm.CustomField2.Id)
             {

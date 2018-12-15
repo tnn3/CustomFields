@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using CustomFields.Interfaces;
 using DAL;
 using DAL.Repositories;
 using Domain;
@@ -46,15 +45,13 @@ namespace WebApplication
             services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
             services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-            services.AddScoped<ICustomField, CustomField2>();
-            services.AddScoped<ICustomFieldCombined, CustomFieldInTasks>();
-
             services.AddMvc();
 
             var embeddedFileProvider = new EmbeddedFileProvider(typeof(FormFactory.FF).GetTypeInfo().Assembly, nameof(FormFactory));
             //Add the file provider to the Razor view engine
             services.Configure<RazorViewEngineOptions>(options =>
             {
+                options.ViewLocationFormats.Add("~/bin/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
                 options.FileProviders.Add(embeddedFileProvider);
             });
         }
