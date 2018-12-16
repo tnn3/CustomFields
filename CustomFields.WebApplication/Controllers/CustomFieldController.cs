@@ -55,17 +55,17 @@ namespace WebApplication.Controllers
         // GET: CustomFields/Create
         public IActionResult Create()
         {
-            return View(new CustomFieldCreateEditViewModel<CustomField2>());
+            return View(new CustomFieldCreateEditViewModel());
         }
 
         // POST: CustomFields/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CustomFieldCreateEditViewModel<CustomField2> vm)
+        public async Task<IActionResult> Create(CustomFieldCreateEditViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
 
-            _customFieldRepository.Add(vm.CustomField2);
+            _customFieldRepository.Add((CustomField2)vm.CustomField);
             await _customFieldRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -84,9 +84,9 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var vm = new CustomFieldCreateEditViewModel<CustomField2>
+            var vm = new CustomFieldCreateEditViewModel
             {
-                CustomField2 = customField,
+                CustomField = customField,
                 HasExistingData = customField.CombinedFields.Any()
             };
 
@@ -96,9 +96,9 @@ namespace WebApplication.Controllers
         // POST: CustomFields/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CustomFieldCreateEditViewModel<CustomField2> vm)
+        public async Task<IActionResult> Edit(int id, CustomFieldCreateEditViewModel vm)
         {
-            if (id != vm.CustomField2.Id)
+            if (id != vm.CustomField.Id)
             {
                 return NotFound();
             }
@@ -111,13 +111,14 @@ namespace WebApplication.Controllers
             }
             try
             {
-                vm.CustomField2.Status = customField.Status;
-                _customFieldRepository.Update(vm.CustomField2);
+                vm.CustomField.Status = customField.Status;
+
+                _customFieldRepository.Update((CustomField2)vm.CustomField);
                 await _customFieldRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_customFieldRepository.Exists(vm.CustomField2.Id))
+                if (!_customFieldRepository.Exists(vm.CustomField.Id))
                 {
                     return NotFound();
                 }

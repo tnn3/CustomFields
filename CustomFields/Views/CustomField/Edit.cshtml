@@ -1,4 +1,5 @@
-﻿@model CustomFields.ViewModels.CustomFieldCreateEditViewModel<CustomFields.Domain.CustomField>
+﻿@model CustomFields.ViewModels.CustomFieldCreateEditViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,8 +13,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CustomField2.Id" />
-            
+            <input type="hidden" asp-for="CustomField.Id" />
+
             <partial name="_CreateEdit" />
 
             <div class="form-group">
