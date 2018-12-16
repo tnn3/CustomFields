@@ -2,7 +2,7 @@
 
 namespace CustomFields.ViewModels
 {
-    public class CustomFieldCreateEditViewModel
+    public class CreateEditViewModel
     {
         public CustomField CustomField { get; set; }
         public bool HasExistingData { get; set; }

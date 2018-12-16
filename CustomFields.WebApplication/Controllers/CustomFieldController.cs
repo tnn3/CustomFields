@@ -26,7 +26,7 @@ namespace WebApplication.Controllers
                 ? await _customFieldRepository.AllIncludingHiddenAsync()
                 : await _customFieldRepository.AllAsync();
 
-            var vm = new CustomFieldIndexViewModel
+            var vm = new IndexViewModel
             {
                 Fields = fields.OrderBy(f => f.Sort),
                 ShowHidden = hidden
@@ -55,13 +55,13 @@ namespace WebApplication.Controllers
         // GET: CustomFields/Create
         public IActionResult Create()
         {
-            return View(new CustomFieldCreateEditViewModel());
+            return View(new CreateEditViewModel());
         }
 
         // POST: CustomFields/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CustomFieldCreateEditViewModel vm)
+        public async Task<IActionResult> Create(CreateEditViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
 
@@ -84,7 +84,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var vm = new CustomFieldCreateEditViewModel
+            var vm = new CreateEditViewModel
             {
                 CustomField = customField,
                 HasExistingData = customField.CombinedFields.Any()
@@ -96,7 +96,7 @@ namespace WebApplication.Controllers
         // POST: CustomFields/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CustomFieldCreateEditViewModel vm)
+        public async Task<IActionResult> Edit(int id, CreateEditViewModel vm)
         {
             if (id != vm.CustomField.Id)
             {
