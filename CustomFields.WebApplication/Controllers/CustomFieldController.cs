@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using CustomFields.Domain.Enums;
-using CustomFields.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Interfaces.Repositories;
@@ -56,17 +55,17 @@ namespace WebApplication.Controllers
         // GET: CustomFields/Create
         public IActionResult Create()
         {
-            return View(nameof(Create), new CreateEditViewModel<ICustomField>());
+            return View(nameof(Create), new CreateEditViewModel());
         }
 
         // POST: CustomFields/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateEditViewModel<CustomField2> vm)
+        public async Task<IActionResult> Create(CreateEditViewModel vm)
         {
             if (!ModelState.IsValid) return View(nameof(Create), vm);
 
-            _customFieldRepository.Add(vm.CustomField);
+            _customFieldRepository.Add(new CustomField2(vm.CustomField));
             await _customFieldRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -85,7 +84,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var vm = new CreateEditViewModel<ICustomField>
+            var vm = new CreateEditViewModel
             {
                 CustomField = customField,
                 HasExistingData = customField.CombinedFields.Any()
@@ -97,7 +96,7 @@ namespace WebApplication.Controllers
         // POST: CustomFields/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CreateEditViewModel<CustomField2> vm)
+        public async Task<IActionResult> Edit(int id, CreateEditViewModel vm)
         {
             if (id != vm.CustomField.Id)
             {
@@ -114,7 +113,7 @@ namespace WebApplication.Controllers
             {
                 vm.CustomField.Status = customField.Status;
 
-                _customFieldRepository.Update(vm.CustomField);
+                _customFieldRepository.Update(new CustomField2(vm.CustomField));
                 await _customFieldRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

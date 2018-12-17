@@ -1,10 +1,10 @@
-﻿using CustomFields.Interfaces;
+﻿using CustomFields.Domain;
 
 namespace CustomFields.ViewModels
 {
-    public class CreateEditViewModel<T> where T : ICustomField
+    public class CreateEditViewModel
     {
-        public virtual T CustomField { get; set; }
+        public virtual CustomField CustomField { get; set; }
         public bool HasExistingData { get; set; }
     }
 }

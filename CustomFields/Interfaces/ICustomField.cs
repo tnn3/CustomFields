@@ -8,12 +8,8 @@ namespace CustomFields.Interfaces
     public interface ICustomField
     {
         int Id { get; set; }
-        [Required]
-        [MaxLength(30)]
         string FieldName { get; set; }
-        [Required]
         FieldType? FieldType { get; set; }
-        [MaxLength(100)]
         string PossibleValues { get; set; }
         int? MinLength { get; set; }
         int? MaxLength { get; set; }
