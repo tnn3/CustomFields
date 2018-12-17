@@ -32,7 +32,7 @@ namespace WebApplication.Controllers
                 ShowHidden = hidden
             };
 
-            return View(vm);
+            return View(nameof(Index), vm);
         }
 
         // GET: CustomFields/Details/5
@@ -49,13 +49,13 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            return View(customField);
+            return View(nameof(Details), customField);
         }
 
         // GET: CustomFields/Create
         public IActionResult Create()
         {
-            return View(new CreateEditViewModel());
+            return View(nameof(Create), new CreateEditViewModel());
         }
 
         // POST: CustomFields/Create
@@ -63,7 +63,7 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateEditViewModel vm)
         {
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid) return View(nameof(Create), vm);
 
             _customFieldRepository.Add((CustomField2)vm.CustomField);
             await _customFieldRepository.SaveChangesAsync();
@@ -90,7 +90,7 @@ namespace WebApplication.Controllers
                 HasExistingData = customField.CombinedFields.Any()
             };
 
-            return View(vm);
+            return View(nameof(Edit), vm);
         }
 
         // POST: CustomFields/Edit/5
@@ -107,7 +107,7 @@ namespace WebApplication.Controllers
             if (!ModelState.IsValid)
             {
                 vm.HasExistingData = customField.CombinedFields.Any();
-                return View(vm);
+                return View(nameof(Edit), vm);
             }
             try
             {

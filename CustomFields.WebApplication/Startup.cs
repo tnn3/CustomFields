@@ -4,6 +4,7 @@ using DAL.Repositories;
 using Domain;
 using Interfaces;
 using Interfaces.Repositories;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+
+//For Resharper/Raider to find custom field view paths
+[assembly: AspMvcViewLocationFormat(@"~/../CustomFields")]
 
 namespace WebApplication
 {
