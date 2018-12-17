@@ -3,7 +3,7 @@
 @using FormFactory
 @model PropertyVm
 @{
-    var posted = ((Model.Value as bool? ?? bool.Parse((Model.Value as string ?? "false"))));
+    var posted = Model.Value as bool? ?? bool.Parse(Model.Value as string ?? "false");
 }  
 @if (Model.GetCustomAttributes().OfType<LabelOnRightAttribute>().Any())
 {
@@ -13,7 +13,7 @@
             {
             <input @Html.Raw(Model.Readonly()) @Html.Raw(Model.Disabled()) @Html.UnobtrusiveValidation(Model) type="checkbox" id="@Model.Id" name="@Model.Name" value="true" @Html.Raw(posted.Attr("checked")) />
             }
-            else //if not required, then it is possible to post a false value, which means we need a hidden field as unchecked checkboxes aren't posted. sigh.
+            else /*if not required, then it is possible to post a false value, which means we need a hidden field as unchecked checkboxes aren't posted. sigh.*/
             {
             <input type='hidden' @Html.Raw(Model.Disabled()) value='@posted.ToString().ToLower()' id="hidden-@Model.Id" name='@Model.Name' />
             <input @Html.Raw(Model.Readonly()) @Html.Raw(Model.Disabled()) @Html.UnobtrusiveValidation(Model) type="checkbox" id="@Model.Id" value="true" @Html.Raw(posted.Attr("checked")) onchange=" javascript: document.getElementById('hidden-@Model.Id').value=this.checked; " />
@@ -27,8 +27,9 @@ else
     {
         <input @Html.Raw(Model.Readonly()) @Html.Raw(Model.Disabled()) @Html.UnobtrusiveValidation(Model) type="checkbox" id="@Model.Id" name="@Model.Name" value="true" @Html.Raw(posted.Attr("checked")) />
     }
-    else //if not required, then it is possible to post a false value, which means we need a hidden field as unchecked checkboxes aren't posted. sigh.
+    else
     {
+        /*if not required, then it is possible to post a false value, which means we need a hidden field as unchecked checkboxes aren't posted. sigh.*/
         <input type='hidden' @Html.Raw(Model.Disabled()) value='@posted.ToString().ToLower()' id="hidden-@Model.Id" name='@Model.Name' />
         <input @Html.Raw(Model.Readonly()) @Html.Raw(Model.Disabled()) @Html.UnobtrusiveValidation(Model) type="checkbox" id="@Model.Id" value="true" @Html.Raw(posted.Attr("checked")) onchange=" javascript: document.getElementById('hidden-@Model.Id').value=this.checked; " />
     }

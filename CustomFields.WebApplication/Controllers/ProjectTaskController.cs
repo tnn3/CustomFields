@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using CustomFields.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain;
 using Interfaces.Repositories;
 using CustomFields.Helpers;
+using CustomFields.Interfaces;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
@@ -49,7 +48,7 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> Create()
         {
             var customFields = await _customFieldRepository.AllWithReferencesAsync();
-            List<CustomField> customFields2 = customFields.Select(field => (CustomField)field).ToList();
+            var customFields2 = customFields.Select(field => (ICustomField)field).ToList();
             var vm = new ProjectTaskViewModel
             {
                 PropertyVms = CustomFields.Helpers.FormFieldHelper.MakeCustomFields<ProjectTask>(customFields2, false, nameof(ProjectTask.CustomFields))
@@ -84,7 +83,7 @@ namespace WebApplication.Controllers
             }
 
             var customFields = projectTask.CustomFields.Select(combined => combined.CustomField).ToList();
-            List<CustomField> customFields2 = customFields.Select(field => (CustomField)field).ToList();
+            var customFields2 = customFields.Select(field => (ICustomField)field).ToList();
             var vm = new ProjectTaskViewModel
             {
                 ProjectTask = projectTask,
@@ -125,7 +124,7 @@ namespace WebApplication.Controllers
 
             if (!ModelState.IsValid)
             {
-                List<CustomField> customFields2 = taskFields.Select(field => (CustomField)field).ToList();
+                var customFields2 = taskFields.Select(field => (ICustomField)field).ToList();
                 var vm = new ProjectTaskViewModel
                 {
                     ProjectTask = projectTask,

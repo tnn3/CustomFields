@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CustomFields.Domain.Enums;
+using CustomFields.Interfaces;
 
 namespace CustomFields.Domain
 {
-    public class CustomField
+    public class CustomField : ICustomField
     {
         public int Id { get; set; }
         [Required]

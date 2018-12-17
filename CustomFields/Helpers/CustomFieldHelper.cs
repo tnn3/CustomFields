@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CustomFields.Domain;
 using CustomFields.Domain.Enums;
+using CustomFields.Interfaces;
 
 namespace CustomFields.Helpers
 {
@@ -17,7 +17,7 @@ namespace CustomFields.Helpers
             return type == FieldType.Text || type == FieldType.Textarea;
         }
 
-        public static List<string> ValidateCustomField(CustomField customField, string fieldValue)
+        public static List<string> ValidateCustomField(ICustomField customField, string fieldValue)
         {
             var errors = new List<string>();
 
