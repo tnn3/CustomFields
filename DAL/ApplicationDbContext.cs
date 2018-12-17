@@ -10,7 +10,7 @@ namespace DAL
     {
         public DbSet<Domain.ProjectTask> ProjectTasks { get; set; }
         public DbSet<Domain.ApplicationUser> AppUsers { get; set; }
-        public DbSet<Domain.CustomField> CustomFields { get; set; }
+        public DbSet<Domain.CustomField2> CustomFields { get; set; }
         public DbSet<Domain.CustomFieldInTasks> CustomFieldInTasks { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)

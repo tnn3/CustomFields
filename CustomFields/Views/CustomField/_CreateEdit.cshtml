@@ -1,6 +1,7 @@
-﻿@using Domain.Enums
-@using WebApplication.Helpers
-@model CustomFieldCreateEditViewModel
+﻿@using CustomFields.Domain.Enums
+@using CustomFields.Helpers
+@model CustomFields.ViewModels.CreateEditViewModel<CustomFields.Interfaces.ICustomField>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField?.FieldType);
@@ -19,10 +20,10 @@
     <div class="form-group">
         <label asp-for="CustomField.FieldType" class="control-label"></label>
         <select asp-for="CustomField.FieldType" asp-items="Html.GetEnumSelectList<FieldType>()" class="form-control">
-        @if (!editing)
-        {
-            <option disabled selected>-- Select type --</option>
-        }
+            @if (!editing)
+            {
+                <option disabled selected>-- Select type --</option>
+            }
         </select>
         <span asp-validation-for="CustomField.FieldType" class="text-danger"></span>
     </div>
@@ -71,7 +72,7 @@
     <div class="form-group">
         <div class="checkbox">
             <label>
-                <input name="CustomField.Status" type="checkbox" value="@((int)FieldStatus.Active)"/>Activate field after create
+                <input name="CustomField.Status" type="checkbox" value="@((int)FieldStatus.Active)" />Activate field after create
             </label>
         </div>
     </div>

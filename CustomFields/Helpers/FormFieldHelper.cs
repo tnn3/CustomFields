@@ -1,24 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Domain;
-using Domain.Enums;
+using CustomFields.Domain;
+using CustomFields.Domain.Enums;
+using CustomFields.Interfaces;
 using FormFactory;
 using FormFactory.Attributes;
 
-namespace WebApplication.Helpers
+namespace CustomFields.Helpers
 {
     public class FormFieldHelper
     {
-        public static PropertyVm[] MakeCustomFields<T>(List<CustomField> customFields, bool enableReadonly, int? formId = null)
+        public static PropertyVm[] MakeCustomFields<T>(List<ICustomField> customFields, bool enableReadonly, string fieldNameReferencingCustomFields, int? formId = null)
         {
             var propertyvm = new List<PropertyVm>();
             var idCounter = 0;
 
             foreach (var customField in customFields) {
-                bool editing = formId != null && customField.Tasks != null;
+                bool editing = formId != null && customField.CombinedFields != null;
 
-                var nameStart = $"{ typeof(T).Name }.{ nameof(ProjectTask.CustomFields) }[{ idCounter++}].";
-                propertyvm.Add(new PropertyVm(typeof(string), nameStart + nameof(CustomFieldInTasks.CustomFieldId)) {
+                var nameStart = $"{ typeof(T).Name }.{ fieldNameReferencingCustomFields }[{ idCounter++}].";
+                propertyvm.Add(new PropertyVm(typeof(string), nameStart + nameof(CustomFieldCombined.CustomFieldId)) {
                     IsHidden = true,
                     Value = customField.Id
                 });
@@ -27,20 +27,14 @@ namespace WebApplication.Helpers
                 {
                     DisplayName = customField.FieldName,
                     NotOptional = customField.IsRequired,
-                    Name = nameStart + nameof(CustomFieldInTasks.FieldValue),
-                    Id = typeof(T).Name + "_" + nameof(ProjectTask.CustomFields) + "_" + customField.Id + "__" + nameof(CustomFieldInTasks.FieldValue),
+                    Name = nameStart + nameof(CustomFieldCombined.FieldValue),
+                    Id = typeof(T).Name + "_" + fieldNameReferencingCustomFields + "_" + customField.Id + "__" + nameof(CustomFieldCombined.FieldValue),
                     Readonly = enableReadonly && customField.Status == FieldStatus.Disabled
                 };
 
-                List<CustomFieldInTasks> formFields = new List<CustomFieldInTasks>();
-
                 if (editing)
                 {
-                    formFields = customField.Tasks.Where(f => f.ProjectTaskId == formId).ToList();
-                    if (formFields.Any())
-                    {
-                        field.Value = formFields.First().FieldValue;
-                    }
+                    field.Value = customField.CombinedFields[0].FieldValue;
                 }
 
                 switch (customField.FieldType)

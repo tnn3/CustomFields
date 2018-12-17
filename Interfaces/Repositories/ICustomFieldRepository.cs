@@ -4,12 +4,12 @@ using Domain;
 
 namespace Interfaces.Repositories
 {
-    public interface ICustomFieldRepository : IBaseRepository<CustomField>
+    public interface ICustomFieldRepository : IBaseRepository<CustomField2>
     {
-        Task<List<CustomField>> AllWithReferencesAsync();
-        Task<List<CustomField>> AllIncludingHiddenAsync();
-        Task<CustomField> FindWithReferencesAsync(int id);
-        CustomField FindWithReferencesNoTracking(int id);
-        Task<List<CustomField>> AllWithValuesByTaskId(int projectTaskId);
+        Task<List<CustomField2>> AllWithReferencesAsync();
+        Task<List<CustomField2>> AllIncludingHiddenAsync();
+        Task<CustomField2> FindWithReferencesAsync(int id);
+        CustomField2 FindWithReferencesNoTracking(int id);
+        Task<List<CustomField2>> AllWithValuesByTaskId(int projectTaskId);
     }
 }

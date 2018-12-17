@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Domain;
-using Domain.Enums;
+using CustomFields.Domain.Enums;
+using CustomFields.Interfaces;
 
-namespace WebApplication.Helpers
+namespace CustomFields.Helpers
 {
     public static class CustomFieldHelper
     {
@@ -17,7 +17,7 @@ namespace WebApplication.Helpers
             return type == FieldType.Text || type == FieldType.Textarea;
         }
 
-        public static List<string> ValidateCustomField(CustomField customField, string fieldValue)
+        public static List<string> ValidateCustomField(ICustomField customField, string fieldValue)
         {
             var errors = new List<string>();
 
@@ -28,7 +28,7 @@ namespace WebApplication.Helpers
 
             if (string.IsNullOrEmpty(fieldValue)) return errors;
 
-            if (CustomFieldHelper.IsOfTextType(customField.FieldType))
+            if (IsOfTextType(customField.FieldType))
             {
                 if (customField.MaxLength != null && fieldValue.Length > customField.MaxLength)
                 {
@@ -46,7 +46,7 @@ namespace WebApplication.Helpers
                 //}
             }
 
-            if (CustomFieldHelper.IsOfChoosableType(customField.FieldType))
+            if (IsOfChoosableType(customField.FieldType))
             {
                 if (!customField.PossibleValues.Split(',').Any(value => value.Equals(fieldValue)))
                 {

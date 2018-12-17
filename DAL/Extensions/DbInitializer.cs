@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Domain;
-using Domain.Enums;
+using CustomFields.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace DAL.Extensions
@@ -19,7 +19,7 @@ namespace DAL.Extensions
 
             if (!context.CustomFields.Any())
             {
-                context.CustomFields.Add(new CustomField
+                context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Text,
                     FieldName = "Test Text Field",
@@ -29,14 +29,14 @@ namespace DAL.Extensions
                     RegexPattern = "^[0-9A-Za-z ]+$",
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField
+                context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Checkbox,
                     FieldName = "Test Checkbox",
                     Sort = 2,
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField
+                context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Radio,
                     FieldName = "Test Radio",
@@ -44,7 +44,7 @@ namespace DAL.Extensions
                     Sort = 3,
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField
+                context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Select,
                     FieldName = "Test Select",
@@ -52,14 +52,14 @@ namespace DAL.Extensions
                     Sort = 4,
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField
+                context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Text,
                     FieldName = "Old removed field",
                     Sort = 0,
                     Status = FieldStatus.Hidden
                 });
-                context.CustomFields.Add(new CustomField
+                context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Textarea,
                     FieldName = "Test textarea",
