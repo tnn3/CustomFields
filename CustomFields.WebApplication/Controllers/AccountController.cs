@@ -57,7 +57,7 @@ namespace WebApplication.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(ProjectTaskController.Index), "ProjectTask");
         }
 
         [HttpGet]
@@ -74,7 +74,7 @@ namespace WebApplication.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(ProjectTaskController.Index), "ProjectTask");
         }
 
         #endregion

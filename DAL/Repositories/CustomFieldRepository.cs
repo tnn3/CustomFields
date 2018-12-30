@@ -11,7 +11,7 @@ namespace DAL.Repositories
 {
     public class CustomFieldRepository : BaseRepository<CustomField2>, ICustomFieldRepository
     {
-        public CustomFieldRepository(IDbContext dataContext) : base(dataContext)
+        public CustomFieldRepository(ApplicationDbContext dataContext) : base(dataContext)
         {
         }
 

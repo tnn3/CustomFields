@@ -65,7 +65,7 @@ namespace WebApplication.Controllers
         {
             if (!ModelState.IsValid) return View(nameof(Create), vm);
 
-            _customFieldRepository.Add(new CustomField2(vm.CustomField));
+            _customFieldRepository.AddAsync(new CustomField2(vm.CustomField)).Wait();
             await _customFieldRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

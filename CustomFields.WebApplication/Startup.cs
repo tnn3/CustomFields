@@ -2,7 +2,6 @@
 using DAL;
 using DAL.Repositories;
 using Domain;
-using Interfaces;
 using Interfaces.Repositories;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
@@ -45,10 +44,8 @@ namespace WebApplication
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddScoped<IDbContext, ApplicationDbContext>();
             services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
             services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
-            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddMvc();
 
             var embeddedFileProvider = new EmbeddedFileProvider(typeof(FormFactory.FF).GetTypeInfo().Assembly, nameof(FormFactory));

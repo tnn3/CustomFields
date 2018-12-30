@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Domain.ProjectTask> ProjectTasks { get; set; }
-        public DbSet<Domain.ApplicationUser> AppUsers { get; set; }
         public DbSet<Domain.CustomField2> CustomFields { get; set; }
         public DbSet<Domain.CustomFieldInTasks> CustomFieldInTasks { get; set; }
 

@@ -27,11 +27,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CustomFields</a>
+                <a asp-area="" asp-controller="ProjectTask" asp-action="Index" class="navbar-brand">CustomFields</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="CustomField" asp-action="Index">Custom fields</a></li>
                     <li><a asp-area="" asp-controller="ProjectTask" asp-action="Index">Tasks</a></li>
                 </ul>
@@ -68,5 +67,6 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

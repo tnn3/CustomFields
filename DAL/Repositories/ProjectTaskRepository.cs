@@ -10,7 +10,7 @@ namespace DAL.Repositories
 {
     public class ProjectTaskRepository : BaseRepository<ProjectTask>, IProjectTaskRepository
     {
-        public ProjectTaskRepository(IDbContext dataContext) : base(dataContext)
+        public ProjectTaskRepository(ApplicationDbContext dataContext) : base(dataContext)
         {
         }
 

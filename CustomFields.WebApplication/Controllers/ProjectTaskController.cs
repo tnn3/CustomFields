@@ -28,23 +28,6 @@ namespace WebApplication.Controllers
             return View(await _projectTaskRepository.AllAsyncWithReferences());
         }
 
-        // GET: ProjectTask/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var projectTask = await _projectTaskRepository.FindAsyncWithReferences(id.Value);
-            if (projectTask == null)
-            {
-                return NotFound();
-            }
-
-            return View(projectTask);
-        }
-
         // GET: ProjectTask/Create
         public async Task<IActionResult> Create()
         {
@@ -65,7 +48,7 @@ namespace WebApplication.Controllers
         {
             if (!ModelState.IsValid) return View(vm);
 
-            _projectTaskRepository.Add(vm.ProjectTask);
+            _projectTaskRepository.AddAsync(vm.ProjectTask).Wait();
             await _projectTaskRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
