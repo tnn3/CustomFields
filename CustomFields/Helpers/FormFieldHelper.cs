@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CustomFields.Domain;
 using CustomFields.Domain.Enums;
 using CustomFields.Interfaces;
@@ -9,16 +10,16 @@ namespace CustomFields.Helpers
 {
     public class FormFieldHelper
     {
-        public static PropertyVm[] MakeCustomFields<T>(List<ICustomField> customFields, bool enableReadonly, string fieldNameReferencingCustomFields, int? formId = null)
+        public static PropertyVm[] MakeCustomFields(List<ICustomField> customFields, string mainClassName, string customFieldReferenceName, int? mainClassId = null)
         {
-            var propertyvm = new List<PropertyVm>();
+            var propertyVms = new List<PropertyVm>();
             var idCounter = 0;
 
             foreach (var customField in customFields) {
-                bool editing = formId != null && customField.CombinedFields != null;
+                bool editing = mainClassId != null && customField.CombinedFields != null;
 
-                var nameStart = $"{ typeof(T).Name }.{ fieldNameReferencingCustomFields }[{ idCounter++}].";
-                propertyvm.Add(new PropertyVm(typeof(string), nameStart + nameof(CustomFieldCombined.CustomFieldId)) {
+                string nameStart = $"{ mainClassName }.{ customFieldReferenceName }[{ idCounter++ }].";
+                propertyVms.Add(new PropertyVm(typeof(string), nameStart + nameof(CustomFieldCombined.CustomFieldId)) {
                     IsHidden = true,
                     Value = customField.Id
                 });
@@ -28,8 +29,8 @@ namespace CustomFields.Helpers
                     DisplayName = customField.FieldName,
                     NotOptional = customField.IsRequired,
                     Name = nameStart + nameof(CustomFieldCombined.FieldValue),
-                    Id = typeof(T).Name + "_" + fieldNameReferencingCustomFields + "_" + customField.Id + "__" + nameof(CustomFieldCombined.FieldValue),
-                    Readonly = enableReadonly && customField.Status == FieldStatus.Disabled
+                    Id = mainClassName + "_" + customFieldReferenceName + "_" + customField.Id + "__" + nameof(CustomFieldCombined.FieldValue),
+                    Readonly = editing && customField.Status == FieldStatus.Disabled
                 };
 
                 if (editing)
@@ -67,11 +68,13 @@ namespace CustomFields.Helpers
                             new MultilineTextAttribute()
                         };
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-                propertyvm.Add(field);
+                propertyVms.Add(field);
             }
 
-            return propertyvm.ToArray();
+            return propertyVms.ToArray();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace CustomFields.Domain
         public string FieldName { get; set; }
         [Required]
         [Display(Name = "Field type")]
-        public FieldType? FieldType { get; set; }
+        public FieldType FieldType { get; set; }
         [MaxLength(100)]
         [Display(Name = "Values to choose from")]
         public string PossibleValues { get; set; }

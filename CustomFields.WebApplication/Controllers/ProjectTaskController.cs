@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -47,11 +48,11 @@ namespace WebApplication.Controllers
         // GET: ProjectTask/Create
         public async Task<IActionResult> Create()
         {
-            var customFields = await _customFieldRepository.AllWithReferencesAsync();
-            var customFields2 = customFields.Select(field => (ICustomField)field).ToList();
+            List<CustomField2> customFields = await _customFieldRepository.AllWithReferencesAsync();
+            IEnumerable<ICustomField> customFieldInterfaces = customFields.Select(field => (ICustomField)field);
             var vm = new ProjectTaskViewModel
             {
-                PropertyVms = CustomFields.Helpers.FormFieldHelper.MakeCustomFields<ProjectTask>(customFields2, false, nameof(ProjectTask.CustomFields))
+                CustomFields = customFieldInterfaces
             };
 
             return View(vm);
@@ -60,7 +61,8 @@ namespace WebApplication.Controllers
         // POST: ProjectTask/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProjectTaskViewModel vm){
+        public async Task<IActionResult> Create(ProjectTaskViewModel vm)
+        {
             if (!ModelState.IsValid) return View(vm);
 
             _projectTaskRepository.Add(vm.ProjectTask);
@@ -82,13 +84,11 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var customFields = projectTask.CustomFields.Select(combined => combined.CustomField).ToList();
-            var customFields2 = customFields.Select(field => (ICustomField)field).ToList();
+            var customFields = projectTask.CustomFields.Select(combined => (ICustomField)combined.CustomField).ToList();
             var vm = new ProjectTaskViewModel
             {
                 ProjectTask = projectTask,
-                PropertyVms = CustomFields.Helpers.FormFieldHelper.MakeCustomFields<ProjectTask>
-                    (customFields2, true, nameof(ProjectTask.CustomFields), id.Value)
+                CustomFields = customFields
             };
             return View(vm);
         }
@@ -124,12 +124,11 @@ namespace WebApplication.Controllers
 
             if (!ModelState.IsValid)
             {
-                var customFields2 = taskFields.Select(field => (ICustomField)field).ToList();
+                var customFields2 = taskFields.Select(field => (ICustomField)field);
                 var vm = new ProjectTaskViewModel
                 {
                     ProjectTask = projectTask,
-                    PropertyVms = CustomFields.Helpers.FormFieldHelper.MakeCustomFields<ProjectTask>
-                    (customFields2.Select(field => field).ToList(), true, nameof(ProjectTask.CustomFields), id)
+                    CustomFields = customFields2
                 };
                 return View(vm);
             }

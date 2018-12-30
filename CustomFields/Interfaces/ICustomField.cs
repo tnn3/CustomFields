@@ -9,7 +9,7 @@ namespace CustomFields.Interfaces
     {
         int Id { get; set; }
         string FieldName { get; set; }
-        FieldType? FieldType { get; set; }
+        FieldType FieldType { get; set; }
         string PossibleValues { get; set; }
         int? MinLength { get; set; }
         int? MaxLength { get; set; }
