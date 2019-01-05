@@ -17,7 +17,7 @@ namespace DAL.Repositories
             RepositoryDbSet = RepositoryDbContext.Set<TEntity>() ?? throw new NullReferenceException($"DbSet for {nameof(TEntity)} was not found.");
         }
 
-        public virtual async Task<IEnumerable<TEntity>> AllAsync() => await RepositoryDbSet.ToListAsync();
+        public virtual async Task<List<TEntity>> AllAsync() => await RepositoryDbSet.ToListAsync();
 
         public virtual Task<TEntity> FindAsync(params object[] id)
         {

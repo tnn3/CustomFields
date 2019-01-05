@@ -31,7 +31,7 @@ namespace WebApplication.Controllers
         // GET: ProjectTask/Create
         public async Task<IActionResult> Create()
         {
-            List<CustomField2> customFields = await _customFieldRepository.AllWithReferencesAsync();
+            List<CustomField2> customFields = await _customFieldRepository.AllAsync();
             IEnumerable<ICustomField> customFieldInterfaces = customFields.Select(field => (ICustomField)field);
             var vm = new ProjectTaskViewModel
             {
@@ -46,7 +46,14 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProjectTaskViewModel vm)
         {
-            if (!ModelState.IsValid) return View(vm);
+            //TODO field validation
+            if (!ModelState.IsValid)
+            {
+                List<CustomField2> customFields = await _customFieldRepository.AllWithReferencesAsync();
+                IEnumerable<ICustomField> customFieldInterfaces = customFields.Select(field => (ICustomField)field);
+                vm.CustomFields = customFieldInterfaces;
+                return View(vm);
+            }
 
             _projectTaskRepository.AddAsync(vm.ProjectTask).Wait();
             await _projectTaskRepository.SaveChangesAsync();

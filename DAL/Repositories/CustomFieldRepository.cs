@@ -15,7 +15,7 @@ namespace DAL.Repositories
         {
         }
 
-        public override async Task<IEnumerable<CustomField2>> AllAsync()
+        public override async Task<List<CustomField2>> AllAsync()
         {
             return await RepositoryDbSet
                 .Where(c => c.Status != FieldStatus.Hidden)

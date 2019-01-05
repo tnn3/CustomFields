@@ -22,7 +22,7 @@
                 <span asp-validation-for="ProjectTask.Title" class="text-danger"></span>
             </div>
 
-            @Model.CustomFields.Render(nameof(ProjectTask), nameof(ProjectTask.CustomFields), Html, Model.ProjectTask.Id)
+            @Model.CustomFields.Render(nameof(ProjectTask), nameof(ProjectTask.CustomFields), Html)
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

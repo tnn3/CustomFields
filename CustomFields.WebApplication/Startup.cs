@@ -48,12 +48,11 @@ namespace WebApplication
             services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
             services.AddMvc();
 
-            var embeddedFileProvider = new EmbeddedFileProvider(typeof(FormFactory.FF).GetTypeInfo().Assembly, nameof(FormFactory));
-            //Add the file provider to the Razor view engine
+            //Add the custom field view locations to the Razor view engine
             services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.ViewLocationFormats.Add("~/bin/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
-                options.FileProviders.Add(embeddedFileProvider);
+                options.ViewLocationFormats.Add("~/bin/Views/{0}" + RazorViewEngine.ViewExtension);
             });
         }
 
@@ -72,13 +71,6 @@ namespace WebApplication
 
             app.UseStaticFiles();
 
-            var options = new StaticFileOptions
-            {
-                RequestPath = "",
-                FileProvider = new EmbeddedFileProvider(typeof(FormFactory.FF).GetTypeInfo().Assembly, nameof(FormFactory))
-            };
-
-            app.UseStaticFiles(options);
 
             app.UseAuthentication();
 
