@@ -10,23 +10,25 @@ namespace CustomFields.Domain
         public int Id { get; set; }
         [Required]
         [MaxLength(30)]
-        [Display(Name = "Field name")]
+        [Display(Name = nameof(FieldName), ResourceType = typeof(Resources.CustomField))]
         public string FieldName { get; set; }
         [Required]
-        [Display(Name = "Field type")]
+        [Display(Name = nameof(FieldType), ResourceType = typeof(Resources.CustomField))]
         public FieldType FieldType { get; set; }
         [MaxLength(100)]
-        [Display(Name = "Values to choose from")]
+        [Display(Name = nameof(PossibleValues), ResourceType = typeof(Resources.CustomField))]
         public string PossibleValues { get; set; }
-        [Display(Name = "Minimum length of field value")]
+        [Display(Name = nameof(MinLength), ResourceType = typeof(Resources.CustomField))]
         public int? MinLength { get; set; }
-        [Display(Name = "Maximum length of field value")]
+        [Display(Name = nameof(MaxLength), ResourceType = typeof(Resources.CustomField))]
         public int? MaxLength { get; set; }
-        [Display(Name = "Field value is required")]
+        [Display(Name = nameof(IsRequired), ResourceType = typeof(Resources.CustomField))]
         public bool IsRequired { get; set; }
-        [Display(Name = "Validation pattern")]
+        [Display(Name = nameof(RegexPattern), ResourceType = typeof(Resources.CustomField))]
         public string RegexPattern { get; set; }
+        [Display(Name = nameof(Sort), ResourceType = typeof(Resources.CustomField))]
         public int Sort { get; set; }
+        [Display(Name = nameof(Status), ResourceType = typeof(Resources.CustomField))]
         public FieldStatus Status { get; set; }
 
         public List<CustomFieldCombined> CombinedFields { get; set; }

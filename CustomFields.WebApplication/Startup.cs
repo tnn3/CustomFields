@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using CustomFields.Resources;
 using DAL;
 using DAL.Repositories;
 using Domain;
@@ -7,11 +8,11 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 
 //For Resharper/Raider to find custom field view paths
 [assembly: AspMvcViewLocationFormat(@"~/../CustomFields")]
@@ -46,7 +47,16 @@ namespace WebApplication
 
             services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
             services.AddScoped<ICustomFieldRepository, CustomFieldRepository>();
-            services.AddMvc();
+
+            services.AddLocalization();
+
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(CustomField));
+                });
 
             //Add the custom field view locations to the Razor view engine
             services.Configure<RazorViewEngineOptions>(options =>
@@ -71,6 +81,18 @@ namespace WebApplication
 
             app.UseStaticFiles();
 
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en-US"),
+                new CultureInfo("et-EE")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-US"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseAuthentication();
 

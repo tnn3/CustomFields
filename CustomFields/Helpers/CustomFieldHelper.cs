@@ -2,6 +2,7 @@
 using System.Linq;
 using CustomFields.Domain.Enums;
 using CustomFields.Interfaces;
+using CustomFields.Resources;
 
 namespace CustomFields.Helpers
 {
@@ -20,10 +21,9 @@ namespace CustomFields.Helpers
         public static List<string> ValidateCustomField(ICustomField customField, string fieldValue)
         {
             var errors = new List<string>();
-
             if (customField.IsRequired && string.IsNullOrEmpty(fieldValue))
             {
-                errors.Add($"Field {customField.FieldName} is required");
+                errors.Add(string.Format(CustomField.Validation_FieldRequired, customField.FieldName));
             }
 
             if (string.IsNullOrEmpty(fieldValue)) return errors;
@@ -32,12 +32,12 @@ namespace CustomFields.Helpers
             {
                 if (customField.MaxLength != null && fieldValue.Length > customField.MaxLength)
                 {
-                    errors.Add($"Field {customField.FieldName} length must be lower than {customField.MaxLength}");
+                    errors.Add(string.Format(CustomField.Validation_FieldLengthMustBeLowerThan, customField.FieldName, customField.MaxLength));
                 }
 
                 if (customField.MinLength != null && fieldValue.Length < customField.MinLength)
                 {
-                    errors.Add($"Field {customField.FieldName} length must be higher than {customField.MinLength}");
+                    errors.Add(string.Format(CustomField.Validation_FieldLengthMustBeHigherThan, customField.FieldName, customField.MinLength));
                 }
 
                 //if (!string.IsNullOrEmpty(customFielda.RegexPattern) && Regex.IsMatch(vmField.FieldValue, customFielda.RegexPattern))
@@ -50,7 +50,7 @@ namespace CustomFields.Helpers
             {
                 if (!customField.PossibleValues.Split(',').Any(value => value.Equals(fieldValue)))
                 {
-                    errors.Add($"Field {customField.FieldName} does not contain selected value");
+                    errors.Add(string.Format(CustomField.Validation_NoSuchSelectedValue, customField.FieldName));
                 }
             }
 
