@@ -9,10 +9,6 @@ namespace CustomFields.Domain
     {
         public int Id { get; set; }
         [Required]
-        [MaxLength(30)]
-        [Display(Name = nameof(FieldName), ResourceType = typeof(Resources.CustomField))]
-        public string FieldName { get; set; }
-        [Required]
         [Display(Name = nameof(FieldType), ResourceType = typeof(Resources.CustomField))]
         public FieldType FieldType { get; set; }
         [MaxLength(100)]
@@ -30,6 +26,10 @@ namespace CustomFields.Domain
         public int Sort { get; set; }
         [Display(Name = nameof(Status), ResourceType = typeof(Resources.CustomField))]
         public FieldStatus Status { get; set; }
+
+        public int FieldNameId { get; set; }
+        [Required]
+        public FieldName FieldName { get; set; }
 
         public List<CustomFieldCombined> CombinedFields { get; set; }
     }

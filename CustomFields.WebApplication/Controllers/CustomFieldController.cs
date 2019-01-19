@@ -21,7 +21,6 @@ namespace WebApplication.Controllers
         // GET: CustomFields
         public async Task<IActionResult> Index(bool hidden)
         {
-            
             var fields = hidden
                 ? await _customFieldRepository.AllIncludingHiddenAsync()
                 : await _customFieldRepository.AllAsync();

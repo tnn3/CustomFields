@@ -61,11 +61,11 @@ namespace CustomFields.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Field name.
+        ///   Looks up a localized string similar to Field default name.
         /// </summary>
-        public static string FieldName {
+        public static string FieldDefaultName {
             get {
-                return ResourceManager.GetString("FieldName", resourceCulture);
+                return ResourceManager.GetString("FieldDefaultName", resourceCulture);
             }
         }
         
