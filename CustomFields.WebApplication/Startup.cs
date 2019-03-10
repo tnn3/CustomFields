@@ -58,6 +58,8 @@ namespace WebApplication
                         factory.Create(typeof(CustomField));
                 });
 
+            services.ConfigureOptions(typeof(CustomFields.StaticFileConfiguration));
+
             //Add the custom field view locations to the Razor view engine
             services.Configure<RazorViewEngineOptions>(options =>
             {

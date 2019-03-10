@@ -2,12 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,11 +24,18 @@
   <ItemGroup>
     <EmbeddedResource Update="Resources\CustomField.et-EE.resx">
       <Generator></Generator>
+      <ExcludeFromManifest>true</ExcludeFromManifest>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\CustomField.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomField.Designer.cs</LastGenOutput>
+      <ExcludeFromManifest>true</ExcludeFromManifest>
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\**\*" />
+  </ItemGroup>
+
 </Project>
+
