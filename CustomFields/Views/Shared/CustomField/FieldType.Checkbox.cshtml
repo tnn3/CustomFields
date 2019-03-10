@@ -8,5 +8,5 @@
 <div class="form-group">
     <input type="hidden" id="@($"{Model.Start}.CustomFieldId")" name="@($"{Model.Start}.CustomFieldId")" value="@Model.CustomField.Id" />
     <input type="checkbox" id="@($"{Model.Start}.FieldValue")" name="@($"{Model.Start}.FieldValue")" @checkedValue />
-    <label class="control-label" for="@($"{Model.Start}.FieldValue")">@Model.CustomField.FieldName</label>
+    <label class="control-label" for="@($"{Model.Start}.FieldValue")">@Model.CustomField.FieldName.FieldDefaultName</label>
 </div>

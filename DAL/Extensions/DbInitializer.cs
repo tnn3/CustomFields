@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using CustomFields.Domain;
 using Domain;
 using CustomFields.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -22,7 +23,7 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Text,
-                    FieldName = "Test Text Field",
+                    FieldName = new FieldName { FieldDefaultName = "Test Text Field" },
                     IsRequired = true,
                     MaxLength = 10,
                     Sort = 1,
@@ -32,14 +33,14 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Checkbox,
-                    FieldName = "Test Checkbox",
+                    FieldName = new FieldName { FieldDefaultName = "Test Checkbox" },
                     Sort = 2,
                     Status = FieldStatus.Active
                 });
                 context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Radio,
-                    FieldName = "Test Radio",
+                    FieldName = new FieldName { FieldDefaultName = "Test Radio" },
                     PossibleValues = "Radio Value4, Radio Value5, Radio Value6",
                     Sort = 3,
                     Status = FieldStatus.Active
@@ -47,7 +48,7 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Select,
-                    FieldName = "Test Select",
+                    FieldName = new FieldName { FieldDefaultName = "Test Select" },
                     PossibleValues = "Select Value7, Select Value8, Select Value9",
                     Sort = 4,
                     Status = FieldStatus.Active
@@ -55,14 +56,14 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Text,
-                    FieldName = "Old removed field",
+                    FieldName = new FieldName { FieldDefaultName = "Old removed field" },
                     Sort = 0,
                     Status = FieldStatus.Hidden
                 });
                 context.CustomFields.Add(new CustomField2
                 {
                     FieldType = FieldType.Textarea,
-                    FieldName = "Test textarea",
+                    FieldName = new FieldName { FieldDefaultName = "Test textarea" },
                     Sort = 5,
                     Status = FieldStatus.Active
                 });
@@ -82,7 +83,7 @@ namespace DAL.Extensions
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
-                    FieldValue = "true", CustomFieldId = 2, ProjectTaskId = 1
+                    FieldValue = "on", CustomFieldId = 2, ProjectTaskId = 1
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {

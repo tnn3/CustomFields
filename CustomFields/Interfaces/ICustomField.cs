@@ -8,7 +8,6 @@ namespace CustomFields.Interfaces
     public interface ICustomField
     {
         int Id { get; set; }
-        string FieldName { get; set; }
         FieldType FieldType { get; set; }
         string PossibleValues { get; set; }
         int? MinLength { get; set; }
@@ -17,6 +16,9 @@ namespace CustomFields.Interfaces
         string RegexPattern { get; set; }
         int Sort { get; set; }
         FieldStatus Status { get; set; }
+
+        int FieldNameId { get; set; }
+        FieldName FieldName { get; set; }
 
         List<CustomFieldCombined> CombinedFields { get; set; }
     }

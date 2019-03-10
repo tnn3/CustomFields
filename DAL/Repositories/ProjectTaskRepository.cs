@@ -26,6 +26,7 @@ namespace DAL.Repositories
             return await RepositoryDbSet
                 .Include(ct => ct.CustomFields)
                     .ThenInclude(c => c.CustomField)
+                        .ThenInclude(cf => cf.FieldName)
                 .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
         }

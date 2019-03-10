@@ -18,6 +18,7 @@ namespace DAL.Repositories
         public override async Task<List<CustomField2>> AllAsync()
         {
             return await RepositoryDbSet
+                .Include(c => c.FieldName)
                 .Where(c => c.Status != FieldStatus.Hidden)
                 .ToListAsync();
         }
@@ -25,6 +26,7 @@ namespace DAL.Repositories
         public Task<List<CustomField2>> AllWithReferencesAsync()
         {
             return RepositoryDbSet
+                .Include(c => c.FieldName)
                 .Where(c => c.Status != FieldStatus.Hidden)
                 .Include(c => c.CombinedFields)
                 .ToListAsync();
@@ -33,6 +35,7 @@ namespace DAL.Repositories
         public Task<List<CustomField2>> AllIncludingHiddenAsync()
         {
             return RepositoryDbSet
+                .Include(c => c.FieldName)
                 .Include(c => c.CombinedFields)
                 .ToListAsync();
         }
@@ -40,6 +43,7 @@ namespace DAL.Repositories
         public Task<CustomField2> FindWithReferencesAsync(int id)
         {
             return RepositoryDbSet
+                .Include(c => c.FieldName)
                 .Include(c => c.CombinedFields)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
@@ -47,6 +51,7 @@ namespace DAL.Repositories
         public CustomField2 FindWithReferencesNoTracking(int id)
         {
             return RepositoryDbSet
+                .Include(c => c.FieldName)
                 .Include(c => c.CombinedFields)
                 .AsNoTracking()
                 .SingleOrDefault(c => c.Id == id);
@@ -55,6 +60,7 @@ namespace DAL.Repositories
         public Task<List<CustomField2>> AllWithValuesByTaskId(int projectTaskId)
         {
             return RepositoryDbSet
+                .Include(c => c.FieldName)
                 .Include(c => c.CombinedFields)
                 .Where(c => c.CombinedFields.Any(a => ((CustomFieldInTasks)a).ProjectTaskId  == projectTaskId))
                 .ToListAsync();
