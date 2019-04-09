@@ -17,7 +17,6 @@ namespace Domain
             MinLength = customField.MinLength;
             MaxLength = customField.MaxLength;
             IsRequired = customField.IsRequired;
-            RegexPattern = customField.RegexPattern;
             Sort = customField.Sort;
             Status = customField.Status;
             CombinedFields = customField.CombinedFields;

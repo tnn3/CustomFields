@@ -20,8 +20,6 @@ namespace CustomFields.Domain
         public int? MaxLength { get; set; }
         [Display(Name = nameof(IsRequired), ResourceType = typeof(Resources.CustomField))]
         public bool IsRequired { get; set; }
-        [Display(Name = nameof(RegexPattern), ResourceType = typeof(Resources.CustomField))]
-        public string RegexPattern { get; set; }
         [Display(Name = nameof(Sort), ResourceType = typeof(Resources.CustomField))]
         public int Sort { get; set; }
         [Display(Name = nameof(Status), ResourceType = typeof(Resources.CustomField))]

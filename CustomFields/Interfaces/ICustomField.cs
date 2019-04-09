@@ -13,7 +13,6 @@ namespace CustomFields.Interfaces
         int? MinLength { get; set; }
         int? MaxLength { get; set; }
         bool IsRequired { get; set; }
-        string RegexPattern { get; set; }
         int Sort { get; set; }
         FieldStatus Status { get; set; }
 

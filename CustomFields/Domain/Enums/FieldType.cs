@@ -13,15 +13,6 @@ namespace CustomFields.Domain.Enums
         [Display(Name = "FieldTypeSelect", ResourceType = typeof(Resources.CustomField))]
         Select,
         [Display(Name = "FieldTypeTextarea", ResourceType = typeof(Resources.CustomField))]
-        Textarea,
-        /*Date,
-        Datetime,
-        Email,
-        Number,
-        Range,
-        Time,
-        Url,
-        Month,
-        TextWithSuggestion*/
+        Textarea
     }
 }

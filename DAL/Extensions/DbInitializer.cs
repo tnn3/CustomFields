@@ -27,7 +27,6 @@ namespace DAL.Extensions
                     IsRequired = true,
                     MaxLength = 10,
                     Sort = 1,
-                    RegexPattern = "^[0-9A-Za-z ]+$",
                     Status = FieldStatus.Active
                 });
                 context.CustomFields.Add(new CustomField2
