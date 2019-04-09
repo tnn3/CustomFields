@@ -1,7 +1,6 @@
 ﻿using System;
 using DAL;
 using DAL.Extensions;
-using Domain;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -22,10 +21,10 @@ namespace WebApplication
                 try
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-                    DbInitializer.Seed(context, roleManager, userManager).Wait();
+                    DbInitializer.Seed(context, roleManager, userManager);
                 }
                 catch (Exception ex)
                 {

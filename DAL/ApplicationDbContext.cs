@@ -1,12 +1,13 @@
 ﻿using DAL.Extensions;
 using Domain;
 using Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Domain.ProjectTask> ProjectTasks { get; set; }
         public DbSet<Domain.CustomField2> CustomFields { get; set; }
