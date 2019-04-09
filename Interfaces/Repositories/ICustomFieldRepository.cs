@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CustomFields.Interfaces;
 using Domain;
 
 namespace Interfaces.Repositories
 {
-    public interface ICustomFieldRepository : IBaseRepository<CustomField2>
+    public interface ICustomFieldRepository : ICustomFieldRepository<CustomField2>
     {
-        Task<List<CustomField2>> AllWithReferencesAsync();
-        Task<List<CustomField2>> AllIncludingHiddenAsync();
-        Task<CustomField2> FindWithReferencesAsync(int id);
-        CustomField2 FindWithReferencesNoTracking(int id);
+        Task<int> SaveChangesAsync();
+        void Remove(CustomField2 customField);
         Task<List<CustomField2>> AllWithValuesByTaskId(int projectTaskId);
     }
 }

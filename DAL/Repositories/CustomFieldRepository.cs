@@ -1,60 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CustomFields.DAL;
 using Interfaces.Repositories;
 using Domain;
-using CustomFields.Domain.Enums;
-using Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class CustomFieldRepository : BaseRepository<CustomField2>, ICustomFieldRepository
+    public class CustomFieldRepository : CustomFieldRepository<CustomField2>, ICustomFieldRepository
     {
-        public CustomFieldRepository(ApplicationDbContext dataContext) : base(dataContext)
+        protected DbContext RepositoryDbContext { get; set; }
+
+        public CustomFieldRepository(ApplicationDbContext dataContext) : base(dataContext.CustomFields)
         {
+            RepositoryDbContext = dataContext;
+            RepositoryDbSet = RepositoryDbContext.Set<CustomField2>() ?? throw new NullReferenceException("CustomField DbSet was not found");
         }
 
-        public override async Task<List<CustomField2>> AllAsync()
+        public Task<int> SaveChangesAsync()
         {
-            return await RepositoryDbSet
-                .Include(c => c.FieldName)
-                .Where(c => c.Status != FieldStatus.Hidden)
-                .ToListAsync();
+            return RepositoryDbContext.SaveChangesAsync();
         }
 
-        public Task<List<CustomField2>> AllWithReferencesAsync()
+        public void Remove(CustomField2 customField)
         {
-            return RepositoryDbSet
-                .Include(c => c.FieldName)
-                .Where(c => c.Status != FieldStatus.Hidden)
-                .Include(c => c.CombinedFields)
-                .ToListAsync();
-        }
-
-        public Task<List<CustomField2>> AllIncludingHiddenAsync()
-        {
-            return RepositoryDbSet
-                .Include(c => c.FieldName)
-                .Include(c => c.CombinedFields)
-                .ToListAsync();
-        }
-
-        public Task<CustomField2> FindWithReferencesAsync(int id)
-        {
-            return RepositoryDbSet
-                .Include(c => c.FieldName)
-                .Include(c => c.CombinedFields)
-                .SingleOrDefaultAsync(c => c.Id == id);
-        }
-
-        public CustomField2 FindWithReferencesNoTracking(int id)
-        {
-            return RepositoryDbSet
-                .Include(c => c.FieldName)
-                .Include(c => c.CombinedFields)
-                .AsNoTracking()
-                .SingleOrDefault(c => c.Id == id);
+            RepositoryDbSet.Attach(customField);
+            RepositoryDbContext.Entry(customField).State = EntityState.Deleted;
+            RepositoryDbSet.Remove(customField);
         }
 
         public Task<List<CustomField2>> AllWithValuesByTaskId(int projectTaskId)
