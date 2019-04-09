@@ -3,8 +3,7 @@
 context('CustomFields', () => {
     it("should create custom field", () => {
         cy.visit("/CustomField/Create");
-        cy.get('label[for="CustomField_FieldName"]').should('be', 'Field type');
-        cy.get("#CustomField_FieldName").type("Field test");
+        cy.get("#CustomField_FieldName_FieldDefaultName").type("Field test");
         cy.get("#CustomField_FieldType").select("Text");
         cy.get('input[name="CustomField.Status"]').check();
         cy.get('input[type="submit"]').click();
@@ -15,7 +14,7 @@ context('CustomFields', () => {
     it("should edit custom field", () => {
         cy.visit("/CustomField");
         cy.get('tbody .btn-warning:first').click();
-        cy.get("#CustomField_FieldName").clear().type("Field test edited");
+        cy.get("#CustomField_FieldName_FieldDefaultName").clear().type("Field test edited");
         cy.get('input[type="submit"]').click();
         cy.url().should('eq', Cypress.config().baseUrl + "/CustomField");
         cy.get('tbody td:first').contains("Field test edited");
