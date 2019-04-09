@@ -5,10 +5,10 @@ using Domain;
 
 namespace Interfaces.Repositories
 {
-    public interface ICustomFieldRepository : ICustomFieldRepository<CustomField2>
+    public interface ICustomFieldRepository : ICustomFieldRepository<CustomFieldInProject>
     {
         Task<int> SaveChangesAsync();
-        void Remove(CustomField2 customField);
-        Task<List<CustomField2>> AllWithValuesByTaskId(int projectTaskId);
+        void Remove(CustomFieldInProject customField);
+        Task<List<CustomFieldInProject>> AllWithValuesByTaskId(int projectTaskId);
     }
 }

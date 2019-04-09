@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class CustomFieldRepository : CustomFieldRepository<CustomField2>, ICustomFieldRepository
+    public class CustomFieldRepository : CustomFieldRepository<CustomFieldInProject>, ICustomFieldRepository
     {
         protected DbContext RepositoryDbContext { get; set; }
 
         public CustomFieldRepository(ApplicationDbContext dataContext) : base(dataContext.CustomFields)
         {
             RepositoryDbContext = dataContext;
-            RepositoryDbSet = RepositoryDbContext.Set<CustomField2>() ?? throw new NullReferenceException("CustomField DbSet was not found");
+            RepositoryDbSet = RepositoryDbContext.Set<CustomFieldInProject>() ?? throw new NullReferenceException("CustomField DbSet was not found");
         }
 
         public Task<int> SaveChangesAsync()
@@ -24,14 +24,14 @@ namespace DAL.Repositories
             return RepositoryDbContext.SaveChangesAsync();
         }
 
-        public void Remove(CustomField2 customField)
+        public void Remove(CustomFieldInProject customField)
         {
             RepositoryDbSet.Attach(customField);
             RepositoryDbContext.Entry(customField).State = EntityState.Deleted;
             RepositoryDbSet.Remove(customField);
         }
 
-        public Task<List<CustomField2>> AllWithValuesByTaskId(int projectTaskId)
+        public Task<List<CustomFieldInProject>> AllWithValuesByTaskId(int projectTaskId)
         {
             return RepositoryDbSet
                 .Include(c => c.FieldName)

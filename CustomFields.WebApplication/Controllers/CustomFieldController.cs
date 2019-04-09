@@ -64,7 +64,7 @@ namespace WebApplication.Controllers
         {
             if (!ModelState.IsValid) return View(nameof(Create), vm);
 
-            _customFieldRepository.AddAsync(new CustomField2(vm.CustomField)).Wait();
+            _customFieldRepository.AddAsync(new CustomFieldInProject(vm.CustomField)).Wait();
             await _customFieldRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -112,7 +112,7 @@ namespace WebApplication.Controllers
             {
                 vm.CustomField.Status = customField.Status;
 
-                _customFieldRepository.Update(new CustomField2(vm.CustomField));
+                _customFieldRepository.Update(new CustomFieldInProject(vm.CustomField));
                 await _customFieldRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

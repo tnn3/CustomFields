@@ -2,13 +2,13 @@
 
 namespace Domain
 {
-    public class CustomField2 : CustomField
+    public class CustomFieldInProject : CustomField
     {
-        public CustomField2()
+        public CustomFieldInProject()
         {
         }
 
-        public CustomField2(CustomField customField)
+        public CustomFieldInProject(CustomField customField)
         {
             Id = customField.Id;
             FieldName = customField.FieldName;

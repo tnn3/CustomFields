@@ -20,7 +20,7 @@ namespace DAL.Extensions
 
             if (!context.CustomFields.Any())
             {
-                context.CustomFields.Add(new CustomField2
+                context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Text,
                     FieldName = new FieldName { FieldDefaultName = "Test Text Field" },
@@ -29,14 +29,14 @@ namespace DAL.Extensions
                     Sort = 1,
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField2
+                context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Checkbox,
                     FieldName = new FieldName { FieldDefaultName = "Test Checkbox" },
                     Sort = 2,
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField2
+                context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Radio,
                     FieldName = new FieldName { FieldDefaultName = "Test Radio" },
@@ -44,7 +44,7 @@ namespace DAL.Extensions
                     Sort = 3,
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField2
+                context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Select,
                     FieldName = new FieldName { FieldDefaultName = "Test Select" },
@@ -52,14 +52,14 @@ namespace DAL.Extensions
                     Sort = 4,
                     Status = FieldStatus.Active
                 });
-                context.CustomFields.Add(new CustomField2
+                context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Text,
                     FieldName = new FieldName { FieldDefaultName = "Old removed field" },
                     Sort = 0,
                     Status = FieldStatus.Hidden
                 });
-                context.CustomFields.Add(new CustomField2
+                context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Textarea,
                     FieldName = new FieldName { FieldDefaultName = "Test textarea" },
