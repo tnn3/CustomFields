@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using CustomFields.Interfaces;
 using CustomFields.ViewModels;
 
@@ -21,13 +22,13 @@ namespace CustomFields
             for (int i = 0; i < list.Count; i++)
             {
                 string start = $"{mainClassName}.{customFieldReferenceName}[{i}]";
-                stringBuilder.AppendLine(list[i].GetFieldPartialView(html, start).ToHtmlString());
+                stringBuilder.Append(list[i].GetFieldPartialView(html, start).Result.ToHtmlString());
             }
 
             return new HtmlString(stringBuilder.ToString());
         }
 
-        private static IHtmlContent GetFieldPartialView(this ICustomField propertyVm, IHtmlHelper html, string start)
+        private static Task<IHtmlContent> GetFieldPartialView(this ICustomField propertyVm, IHtmlHelper html, string start)
         {
             string partialViewName;
             switch (propertyVm.FieldType)
@@ -48,22 +49,21 @@ namespace CustomFields
                     partialViewName = "CustomField/FieldType.Textarea";
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"Unknown partial view {propertyVm.FieldType}");
             }
-            //TODO move to partial async
-            return html.Partial(partialViewName, new FormFieldViewModel
+            return html.PartialAsync(partialViewName, new FormFieldViewModel
             {
                 CustomField = propertyVm,
                 Start = start
             }, null);
         }
 
-        private static string ToHtmlString(this IHtmlContent content)
+        private static StringBuilder ToHtmlString(this IHtmlContent content)
         {
             using (var writer = new StringWriter())
             {
                 content.WriteTo(writer, HtmlEncoder.Default);
-                return writer.GetStringBuilder().ToString();
+                return writer.GetStringBuilder();
             }
         }
     }
