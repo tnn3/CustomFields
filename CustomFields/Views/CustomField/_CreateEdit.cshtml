@@ -31,7 +31,7 @@
 
 @if (!Model.HasExistingData || isOfChoosable)
 {
-    <div id="field-values" class="form-group @hiddenClass hideable">
+    <div id="field-values" class="form-group @hiddenClass">
         <label asp-for="CustomField.PossibleValues" class="control-label"></label>
         <input asp-for="CustomField.PossibleValues" class="form-control" />
         <span asp-validation-for="CustomField.PossibleValues" class="text-danger"></span>
@@ -40,7 +40,7 @@
 
 @if (!Model.HasExistingData || isOfTextType)
 {
-    <div id="text-fields" class="@hiddenClass hideable">
+    <div id="text-fields" class="@hiddenClass">
         <div class="form-group">
             <label asp-for="CustomField.MinLength" class="control-label"></label>
             <input asp-for="CustomField.MinLength" class="form-control" />
