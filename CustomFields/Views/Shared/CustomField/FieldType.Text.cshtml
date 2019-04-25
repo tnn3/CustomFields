@@ -1,10 +1,5 @@
 ﻿@model CustomFields.ViewModels.FormFieldViewModel
 
-@{
-    bool editing = Model.CustomField.CombinedFields != null;
-    string existingValue = editing ? Model.CustomField.CombinedFields[0].FieldValue : string.Empty;
-}
-
 <div class="form-group">
     <input type="hidden" id="@($"{Model.Start}.CustomFieldId")" name="@($"{Model.Start}.CustomFieldId")" value="@Model.CustomField.Id" />
     <label class="control-label" for="@($"{Model.Start}.FieldName.FieldDefaultName")">@Model.CustomField.FieldName.FieldDefaultName</label>
@@ -13,5 +8,5 @@
            name="@($"{Model.Start}.FieldValue")"
            required="@Model.CustomField.IsRequired"
            maxlength="@Model.CustomField.MaxLength"
-           value="@existingValue" />
+           value="@Model.SelectedValue" />
 </div>

@@ -1,8 +1,7 @@
 ﻿@model CustomFields.ViewModels.FormFieldViewModel
 
 @{
-    bool editing = Model.CustomField.CombinedFields != null;
-    var checkedValue = editing && Model.CustomField.CombinedFields[0].FieldValue != null && Model.CustomField.CombinedFields[0].FieldValue.Equals("on") ? "checked" : string.Empty;
+    var checkedValue = !string.IsNullOrEmpty(Model.SelectedValue) && Model.CustomField.CombinedFields[0].FieldValue.Equals("on") ? "checked" : string.Empty;
 }
 
 <div class="form-group">
