@@ -70,12 +70,6 @@ namespace WebApplication
 
             services.ConfigureOptions(typeof(CustomFields.StaticFileConfiguration));
 
-            //Add the custom field view locations to the Razor view engine
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                options.ViewLocationFormats.Add("~/bin/Views/{1}/{0}" + RazorViewEngine.ViewExtension);
-                options.ViewLocationFormats.Add("~/bin/Views/{0}" + RazorViewEngine.ViewExtension);
-            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
