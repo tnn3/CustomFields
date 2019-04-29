@@ -54,7 +54,7 @@ namespace WebApplication
                         new CultureInfo("en-US"),
                         new CultureInfo("et-EE"),
                         //unknown culture for testing non translated fields
-                        new CultureInfo("aa-AA")
+                        new CultureInfo("xx-xx")
                     };
 
                 options.DefaultRequestCulture = new RequestCulture(culture: "et-EE", uiCulture: "et-EE");
