@@ -71,6 +71,7 @@ namespace CustomFields.DAL
         {
             return RepositoryDbSet
                 .Include(c => c.FieldName)
+                .ThenInclude(fieldName => fieldName.FieldNameTranslations)
                 .Include(c => c.CombinedFields)
                 .SingleOrDefaultAsync(c => c.Id == id);
         }

@@ -1,11 +1,17 @@
-﻿@model CustomFields.ViewModels.FormFieldViewModel
+﻿@using CustomFields.Helpers
+@using Microsoft.AspNetCore.Localization
+@model CustomFields.ViewModels.FormFieldViewModel
+@{
+    var requestCultureUIName = Context.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture.Name;
+    var fieldLabelName = CustomFieldHelper.GetFieldName(Model.CustomField, requestCultureUIName);
+}
 
 <div class="form-group">
     <input type="hidden" id="@($"{Model.Start}.CustomFieldId")" name="@($"{Model.Start}.CustomFieldId")" value="@Model.CustomField.Id" />
-    <label class="control-label" for="@($"{Model.Start}.FieldName.FieldDefaultName")">@Model.CustomField.FieldName.FieldDefaultName</label>
+    <label class="control-label" for="@($"{Model.Start}.FieldValue")">@fieldLabelName</label>
     <textarea type="text" class="form-control"
-        id="@($"{Model.Start}.FieldValue")"
-        name="@($"{Model.Start}.FieldValue")"
-        required="@Model.CustomField.IsRequired"
-        maxlength="@Model.CustomField.MaxLength">@Model.SelectedValue</textarea>
+              id="@($"{Model.Start}.FieldValue")"
+              name="@($"{Model.Start}.FieldValue")"
+              required="@Model.CustomField.IsRequired"
+              maxlength="@Model.CustomField.MaxLength">@Model.SelectedValue</textarea>
 </div>

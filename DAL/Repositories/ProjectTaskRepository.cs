@@ -27,6 +27,7 @@ namespace DAL.Repositories
                 .Include(ct => ct.CustomFields)
                     .ThenInclude(c => c.CustomField)
                         .ThenInclude(cf => cf.FieldName)
+                            .ThenInclude(fieldName => fieldName.FieldNameTranslations)
                 .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
         }

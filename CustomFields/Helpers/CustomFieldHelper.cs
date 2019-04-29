@@ -56,5 +56,13 @@ namespace CustomFields.Helpers
 
             return errors;
         }
+
+        public static string GetFieldName(ICustomField customField, string culture)
+        {
+            var fieldTranslation =
+                customField.FieldName.FieldNameTranslations?.Find(translation => translation.Locale.Equals(culture))?.Value;
+
+            return fieldTranslation ?? customField.FieldName.FieldDefaultName;
+        }
     }
 }

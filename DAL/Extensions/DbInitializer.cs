@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CustomFields.Domain;
 using Domain;
@@ -23,7 +24,23 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Text,
-                    FieldName = new FieldName { FieldDefaultName = "Test Text Field" },
+                    FieldName = new FieldName
+                    {
+                        FieldDefaultName = "TestTextField",
+                        FieldNameTranslations = new List<FieldNameTranslation>
+                        {
+                            new FieldNameTranslation
+                            {
+                                Locale = "en-US",
+                                Value = "Test Text Field"
+                            },
+                            new FieldNameTranslation
+                            {
+                                Locale = "et-EE",
+                                Value = "Test Teksti väli"
+                            }
+                        }
+                    },
                     IsRequired = true,
                     MaxLength = 10,
                     Sort = 1,
@@ -32,14 +49,42 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Checkbox,
-                    FieldName = new FieldName { FieldDefaultName = "Test Checkbox" },
+                    FieldName = new FieldName { FieldDefaultName = "TestCheckbox",
+                        FieldNameTranslations = new List<FieldNameTranslation>
+                        {
+                            new FieldNameTranslation
+                            {
+                                Locale = "en-US",
+                                Value = "Test Checkbox"
+                            },
+                            new FieldNameTranslation
+                            {
+                                Locale = "et-EE",
+                                Value = "Test linnukesega väli"
+                            }
+                        }
+                    },
                     Sort = 2,
                     Status = FieldStatus.Active
                 });
                 context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Radio,
-                    FieldName = new FieldName { FieldDefaultName = "Test Radio" },
+                    FieldName = new FieldName { FieldDefaultName = "TestRadio",
+                        FieldNameTranslations = new List<FieldNameTranslation>
+                        {
+                            new FieldNameTranslation
+                            {
+                                Locale = "en-US",
+                                Value = "Test Radio"
+                            },
+                            new FieldNameTranslation
+                            {
+                                Locale = "et-EE",
+                                Value = "Test ümar valikväli"
+                            }
+                        }
+                    },
                     PossibleValues = "Radio Value4, Radio Value5, Radio Value6",
                     Sort = 3,
                     Status = FieldStatus.Active
@@ -47,7 +92,21 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Select,
-                    FieldName = new FieldName { FieldDefaultName = "Test Select" },
+                    FieldName = new FieldName { FieldDefaultName = "TestSelect",
+                        FieldNameTranslations = new List<FieldNameTranslation>
+                        {
+                            new FieldNameTranslation
+                            {
+                                Locale = "en-US",
+                                Value = "Test Select"
+                            },
+                            new FieldNameTranslation
+                            {
+                                Locale = "et-EE",
+                                Value = "Test rippvalik"
+                            }
+                        }
+                    },
                     PossibleValues = "Select Value7, Select Value8, Select Value9",
                     Sort = 4,
                     Status = FieldStatus.Active
@@ -62,7 +121,21 @@ namespace DAL.Extensions
                 context.CustomFields.Add(new CustomFieldInProject
                 {
                     FieldType = FieldType.Textarea,
-                    FieldName = new FieldName { FieldDefaultName = "Test textarea" },
+                    FieldName = new FieldName { FieldDefaultName = "TestTextarea",
+                        FieldNameTranslations = new List<FieldNameTranslation>
+                        {
+                            new FieldNameTranslation
+                            {
+                                Locale = "en-US",
+                                Value = "Test textarea"
+                            },
+                            new FieldNameTranslation
+                            {
+                                Locale = "et-EE",
+                                Value = "Test mitmerealine väli"
+                            }
+                        }
+                    },
                     Sort = 5,
                     Status = FieldStatus.Active
                 });
