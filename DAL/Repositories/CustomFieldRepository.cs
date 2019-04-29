@@ -24,13 +24,6 @@ namespace DAL.Repositories
             return RepositoryDbContext.SaveChangesAsync();
         }
 
-        public void Remove(CustomFieldInProject customField)
-        {
-            RepositoryDbSet.Attach(customField);
-            RepositoryDbContext.Entry(customField).State = EntityState.Deleted;
-            RepositoryDbSet.Remove(customField);
-        }
-
         public Task<List<CustomFieldInProject>> AllWithValuesByTaskId(int projectTaskId)
         {
             return RepositoryDbSet
