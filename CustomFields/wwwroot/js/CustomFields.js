@@ -1,8 +1,10 @@
 ﻿"use strict";
 
-document.getElementById("CustomField_FieldType").addEventListener("change", function (event) {
-    changeFieldVisibility(event.target.value);
-});
+if (document.getElementById("CustomField_FieldType")) {
+    document.getElementById("CustomField_FieldType").addEventListener("change", function (event) {
+        changeFieldVisibility(event.target.value);
+    });
+}
 
 function changeFieldVisibility(selectedValue) {
     document.getElementById("field-values").classList.add("hidden");

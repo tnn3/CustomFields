@@ -6,9 +6,17 @@
 @{
     bool isOfChoosable = CustomFieldHelper.IsOfChoosableType(Model.CustomField?.FieldType);
     bool isOfTextType = CustomFieldHelper.IsOfTextType(Model.CustomField?.FieldType);
-    bool editing = Model.CustomField?.FieldType != null;
-    string hiddenClass = !Model.HasExistingData || !editing ? "hidden" : "";
+    bool editing = Model.CustomField != null && Model.CustomField.Id != 0;
+    string choosableClass = isOfChoosable ? "" : "hidden";
+    string textTypeClass = isOfTextType ? "" : "hidden";
 }
+
+<h1>Has existing: @Model.HasExistingData</h1>
+<h1>Editing: @editing</h1>
+<h1>Choosable: @choosableClass</h1>
+<h1>Text: @textTypeClass</h1>
+<h1>CF id: @Model.CustomField?.Id</h1>
+<h1>CF type: @Model.CustomField?.FieldType</h1>
 
 <div class="form-group">
     <label asp-for="CustomField.FieldName.FieldDefaultName" class="control-label"></label>
@@ -31,7 +39,7 @@
 
 @if (!Model.HasExistingData || isOfChoosable)
 {
-    <div id="field-values" class="form-group @hiddenClass">
+    <div id="field-values" class="form-group @choosableClass">
         <label asp-for="CustomField.PossibleValues" class="control-label"></label>
         <input asp-for="CustomField.PossibleValues" class="form-control" />
         <span asp-validation-for="CustomField.PossibleValues" class="text-danger"></span>
@@ -40,7 +48,7 @@
 
 @if (!Model.HasExistingData || isOfTextType)
 {
-    <div id="text-fields" class="@hiddenClass">
+    <div id="text-fields" class="@textTypeClass">
         <div class="form-group">
             <label asp-for="CustomField.MinLength" class="control-label"></label>
             <input asp-for="CustomField.MinLength" class="form-control" />

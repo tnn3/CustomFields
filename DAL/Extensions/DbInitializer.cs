@@ -159,7 +159,7 @@ namespace DAL.Extensions
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {
-                    FieldValue = "Radio Value5", CustomFieldId = 3, ProjectTaskId = 1
+                    FieldValue = " Radio Value5", CustomFieldId = 3, ProjectTaskId = 1
                 });
                 context.CustomFieldInTasks.Add(new CustomFieldInTasks
                 {

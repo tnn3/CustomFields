@@ -27,7 +27,7 @@ namespace WebApplication.Controllers
 
             var vm = new IndexViewModel
             {
-                Fields = fields.OrderBy(f => f.Sort),
+                Fields = fields,
                 ShowHidden = hidden
             };
 

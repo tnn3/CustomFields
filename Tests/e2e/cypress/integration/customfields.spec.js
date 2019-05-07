@@ -8,15 +8,15 @@ context('CustomFields', () => {
         cy.get('input[name="CustomField.Status"]').check();
         cy.get('input[type="submit"]').click();
         cy.url().should('eq', Cypress.config().baseUrl + "/CustomField");
-        cy.get('tbody td:first').contains("Field test");
+        cy.get('tbody tr:last td:first').contains("Field test");
     });
 
     it("should edit custom field", () => {
         cy.visit("/CustomField");
-        cy.get('tbody .btn-warning:first').click();
+        cy.get('tbody tr:last .btn-warning').click();
         cy.get("#CustomField_FieldName_FieldDefaultName").clear().type("Field test edited");
         cy.get('input[type="submit"]').click();
         cy.url().should('eq', Cypress.config().baseUrl + "/CustomField");
-        cy.get('tbody td:first').contains("Field test edited");
+        cy.get('tbody tr:last td:first').contains("Field test edited");
     });
 });
