@@ -11,13 +11,6 @@
     string textTypeClass = isOfTextType ? "" : "hidden";
 }
 
-<h1>Has existing: @Model.HasExistingData</h1>
-<h1>Editing: @editing</h1>
-<h1>Choosable: @choosableClass</h1>
-<h1>Text: @textTypeClass</h1>
-<h1>CF id: @Model.CustomField?.Id</h1>
-<h1>CF type: @Model.CustomField?.FieldType</h1>
-
 <div class="form-group">
     <label asp-for="CustomField.FieldName.FieldDefaultName" class="control-label"></label>
     <input asp-for="CustomField.FieldName.FieldDefaultName" class="form-control" />
